@@ -2,6 +2,8 @@
  require "src/conexao.php";
  require "src/modelo/ClassProduto.php";
  require "src/repositorio/produto-repositorio.php";
+ $db = new Database();
+ $pdo = $db->getConnection();
 
  if (isset($_POST['cadastro'])){
     $produto = new Produto(null,

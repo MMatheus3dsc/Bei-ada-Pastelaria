@@ -30,6 +30,10 @@
         <input type="text" id="endereco" name="endereco" placeholder="Endereço">
       </div>
       <div class="form-group">
+        <label for="telephone">Telefone</label>
+        <input type="tell" id="tell" name="tell" placeholder='Telefone' >
+      </div>
+      <div class="form-group">
         <label for="password">Senha:</label>
         <input type="password" id="password" name="password" placeholder="Senha" required>
       </div>

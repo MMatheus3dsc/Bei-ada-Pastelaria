@@ -2,7 +2,8 @@
    require "src/conexao.php";
    require "src/modelo/ClassProduto.php";
    require "src/repositorio/produto-repositorio.php";
-
+   $db = new Database();
+   $pdo = $db->getConnection();
    $Repositorio = new produtoRepositorio($pdo);
    if (isset($_POST['editar'])) {
     $produto = new Produto($_POST['id'], $_POST['tipo'], $_POST['nome'], $_POST['descricao'], $_POST['preco']);
