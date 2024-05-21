@@ -1,3 +1,38 @@
+<?php
+require "src/conexao.php";
+require "src/modelo/ClassUsuario.php";
+require "src/repositorio/users-repositorio.php";
+
+$db = new Database();
+$pdo = $db->getConnection();
+
+if (!$pdo) {
+    die("Falha na conexão com o banco de dados.");
+}
+
+if (isset($_POST['cadastro-user'])) {
+    $usuario = new Usuario(
+        null,
+        $_POST['name'],
+        $_POST['email'],
+        $_POST['address'],
+        $_POST['phone'],
+        $_POST['password']
+    );
+
+    $repositorioCadastro = new UsuarioRepositorio($pdo);
+    try {
+        $repositorioCadastro->cadastrarUsuario($usuario);
+        header("Location: index.php");
+        exit;
+    } catch (Exception $e) {
+        echo 'Erro ao cadastrar o usuário: ' . $e->getMessage();
+    }
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -16,7 +51,7 @@
 <body>
   <div class="signup-container">
     <h2>Cadastro</h2>
-    <form id="login" action="#" method="POST">
+    <form id="cadastro" action="#" method="POST">
       <div class="form-group">
         <label for="username">Nome</label>
         <input type="text" id="name" name="name" placeholder="Nome completo" required>
@@ -27,11 +62,11 @@
       </div>
       <div class="form-group">
         <label for="endereco">Endereço</label>
-        <input type="text" id="endereco" name="endereco" placeholder="Endereço">
+        <input type="text" id="address" name="address" placeholder="Endereço">
       </div>
       <div class="form-group">
         <label for="telephone">Telefone</label>
-        <input type="tell" id="tell" name="tell" placeholder='Telefone' >
+        <input type="tell" id="phone" name="phone" placeholder='Telefone' >
       </div>
       <div class="form-group">
         <label for="password">Senha:</label>
@@ -42,7 +77,7 @@
         <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirme sua senha" required>
       </div>
       <div class="form-group">
-        <button type="submit">Cadastrar</button>
+        <button type="submit" name="cadastro-user">Cadastrar</button>
       </div>
     </form>
   </div>

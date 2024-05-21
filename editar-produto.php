@@ -16,7 +16,7 @@
     $Repositorio->atualizar($produto);
     header("Location: admin.php");
 } else {
-    $produto = $Repositorio->buscarEditar($_GET['id']);
+    $produto = $Repositorio->buscarPorId($_GET['id']);
    }
 
 

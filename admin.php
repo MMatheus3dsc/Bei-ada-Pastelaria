@@ -5,7 +5,7 @@
    $db = new Database();
    $pdo = $db->getConnection();
   $repositorio = new ProdutoRepositorio($pdo);
-  $produtos = $repositorio->busacarTodos();
+  $produtos = $repositorio->buscarTodos();
 
   
 

@@ -1,12 +1,12 @@
 <?php
-/*$pdo = new PDO('mysql:host=localhost;dbname=dates_beicada', username: "root", password:"Muleta");*/
 
 
 class Database {
     private $host = 'localhost';
+    private $port = '3306';
     private $dbName = 'dates_beicada';
     private $username = 'root';
-    private $password = 'Muleta';
+    private $password = '123muleta';
     private $pdo;
 
     public function __construct() {
@@ -15,14 +15,14 @@ class Database {
 
     private function connect() {
         try {
-            $this->pdo = new PDO("mysql:host={$this->host};dbname={$this->dbName}", $this->username, $this->password);
+            $this->pdo = new PDO("mysql:host={$this->host};port={$this->port};dbname={$this->dbName}", $this->username, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo "Erro na conexão: " . $e->getMessage();
         }
     }
 
-    public function getConnection() {
+    public function getConnection(): PDO {
         return $this->pdo;
     }
 }

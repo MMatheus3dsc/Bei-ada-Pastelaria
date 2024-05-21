@@ -5,7 +5,7 @@
  $db = new Database();
  $pdo = $db->getConnection();
 
- if (isset($_POST['cadastro'])){
+ if (isset($_POST['cadastro-produto'])){
     $produto = new Produto(null,
     $_POST['tipo'],
     $_POST['nome'],
@@ -74,7 +74,7 @@ $repositorioCadastro = new ProdutoRepositorio($pdo);
             <label for="imagem">Envie uma imagem do produto</label>
             <input type="file" name="imagem" accept="image/*" id="imagem" placeholder="Envie uma imagem">
 
-            <input type="submit" name="cadastro" class="botao-cadastrar" value="Cadastrar produto"/>
+            <input type="submit" name="cadastro-produto" class="botao-cadastrar" value="Cadastrar produto"/>
         </form>
     
     </section>
@@ -82,6 +82,6 @@ $repositorioCadastro = new ProdutoRepositorio($pdo);
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="js/index.js"></script>
+
 </body>
 </html>

@@ -8,8 +8,8 @@ use Dompdf\Dompdf;
 $dompdf = new Dompdf();
 ob_start();
 require "data-pdf.php";
-$pdfSerenatto = ob_get_clean();
-$dompdf->loadHtml($pdfSerenatto);
+$pdBeicada = ob_get_clean();
+$dompdf->loadHtml($pdfBeicada);
 
 // (Optional) Setup the paper size and orientation
 $dompdf->setPaper('A4',);

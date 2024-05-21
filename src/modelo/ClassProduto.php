@@ -15,7 +15,7 @@ class Produto
 
     private string $imagem;
 
-    public function __construct(?int $id , string $tipo, string $nome, string $descricao, float $preco,string $imagem = "logo-serenatto.png",)  // construtor da classe
+    public function __construct(?int $id , string $tipo, string $nome, string $descricao, float $preco,string $imagem = "banner-beiçada.jng")  // construtor da classe
     {
         $this->id = $id;
             $this->tipo = $tipo;

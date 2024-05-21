@@ -2,9 +2,10 @@
    require "src/conexao.php";
    require "src/modelo/ClassProduto.php";
    require "src/repositorio/produto-repositorio.php";
-
+   $db = new Database();
+   $pdo = $db->getConnection();
   $repositorio = new ProdutoRepositorio($pdo);
-  $produtos = $repositorio->busacarTodos();
+  $produtos = $repositorio->buscarTodos();
 
 
 ?>
