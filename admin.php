@@ -1,4 +1,14 @@
 <?php
+
+session_start(); // Inicia a sessão
+
+// Verifica se o usuário está autenticado
+if (!isset($_SESSION['email'])) {
+    // Se não estiver autenticado, redireciona de volta para a página de login
+    header('location: login.php');
+    exit;
+}
+
    require "src/conexao.php";
    require "src/modelo/ClassProduto.php";
    require "src/repositorio/produto-repositorio.php";

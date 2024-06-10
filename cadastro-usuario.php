@@ -23,7 +23,7 @@ if (isset($_POST['cadastro-user'])) {
     $repositorioCadastro = new UsuarioRepositorio($pdo);
     try {
         $repositorioCadastro->cadastrarUsuario($usuario);
-        header("Location: index.php");
+        header("Location: login.php");
         exit;
     } catch (Exception $e) {
         echo 'Erro ao cadastrar o usuário: ' . $e->getMessage();
@@ -51,7 +51,7 @@ if (isset($_POST['cadastro-user'])) {
 <body>
   <div class="signup-container">
     <h2>Cadastro</h2>
-    <form id="cadastro" action="#" method="POST">
+    <form id="cadastro" action="" method="POST">
       <div class="form-group">
         <label for="username">Nome</label>
         <input type="text" id="name" name="name" placeholder="Nome completo" required>
