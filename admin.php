@@ -1,6 +1,6 @@
 <?php
 
-session_start(); // Inicia a sessão
+session_start(); 
 
 // Verifica se o usuário está autenticado
 if (!isset($_SESSION['email'])) {
@@ -42,7 +42,7 @@ if (!isset($_SESSION['email'])) {
 <main>
   <section class="container-admin-banner">
    <a href="index.php"><img src="img/banner-beiçada.jpg" class="logo-admin" alt="logo-beicada"></a> 
-    <h1>Admistração Serenatto</h1>
+    <h1>Admistração Beiçada</h1>
     <img class= "ornaments" src="img/ornaments-coffee.png" alt="ornaments">
   </section>
   <h2>Lista de Produtos</h2>

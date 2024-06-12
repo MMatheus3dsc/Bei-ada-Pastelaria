@@ -1,6 +1,26 @@
 <?php
 session_start(); // Inicia a sessão
 
+if (empty($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+  if (!empty($_POST["email"]) && !empty($_POST['password']) && !empty($_POST['csrf_token'])) {
+      if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+          $email = $_POST['email'];
+          $password = $_POST['password'];
+      } else {
+          echo "Token CSRF inválido.";
+          exit;
+      }
+  } else {
+      echo "Por favor, preencha todos os campos.";
+      exit;
+  }
+}
+
+
+
 require "src/conexao.php";
 
 $db = new Database();
@@ -72,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
   <div class="login-container">
     <h2>Tela de Login</h2>
     <form id="login" action="login.php" method="POST">
+    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="E-mail" autofocus>
@@ -84,6 +105,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         <button type="submit" name="submit" >Entrar</button>
       </div>
     </form>
+    <?php
+    if (isset($_GET['error'])) {
+        if ($_GET['error'] == 'invalid_password') {
+            echo "<p style='color: red;'>Senha inválida. Tente novamente.</p>";
+        } elseif ($_GET['error'] == 'user_not_found') {
+            echo "<p style='color: red;'>Usuário não encontrado. Tente novamente.</p>";
+        }
+      }
+        ?>
     <div class="signup-link">
       <span>Não tem uma conta? <a href="cadastro-usuario.php">Cadastre-se</a></span>
     </div>
