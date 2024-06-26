@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 
 
 
-require "src/conexao.php";
+require "../src/conexao.php";
 
 $db = new Database();
 $pdo = $db->getConnection();
@@ -47,16 +47,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                     // Usuário autenticado, criar uma sessão para ele
                     $_SESSION['email'] = $email;
                     // Redirecionar para a página de administração
-                    header('Location: admin.php');
+                    header('Location: ../admin.php');
                     exit;
                 } else {
                     // Senha incorreta
-                    header('Location: login.php?error=invalid_password');
+                    header('Location: ../usuario/login.php?error=invalid_password');
                     exit;
                 }
             } else {
                 // Usuário não encontrado
-                header('Location: login.php?error=user_not_found');
+                header('Location: ../usuario/login.php?error=user_not_found');
                 exit;
             }
         } else {
@@ -79,8 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 <meta charset="UTF-8">
   <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/login.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" href="" type="">
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
     </div>
   </div>
 
-  <script type="module" src ="./js/filtros.js"></script>
+  <script type="module" src ="../js/filtros.js"></script>
 </body>
 
 </html>

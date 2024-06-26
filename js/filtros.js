@@ -58,9 +58,7 @@ function validarFormulario(event) {
 }
 
 // Função 
-function validNome(name){
 
-}
 function validEmail(email) {
   var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}$/;
   return emailRegex.test(email);

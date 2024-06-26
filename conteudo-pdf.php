@@ -60,9 +60,3 @@ $produtos = $repositorio->buscarTodos();
   <?php endforeach; ?>
 </tbody>
 </table>
-
-
-
-
-
-

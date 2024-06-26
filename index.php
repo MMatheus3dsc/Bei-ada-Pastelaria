@@ -34,12 +34,17 @@
 </head>
 <body>
     <main>
-        <section class="container-banner">
+        <div class=""></div>
+        <header>
+            <section class="container-banner">
             <div class="container-texto-banner">
                 <img src="img/banner-beiçada.jpg" class="logo" alt="">
             </div>
         </section>
+    </header>
+        
         <h2>Cardápio Digital</h2>
+        
         <section class="container-salgado">
             <div class="container-salgado-titulo">
                 <h3>Opções de Pastel Salgado</h3>
@@ -80,6 +85,7 @@
              </div>
             
         </section>
+        <div id="log"><a href="usuario/login.php" >Login</a></div>
        
     </main>
 </body>
