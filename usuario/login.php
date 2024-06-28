@@ -48,8 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                     $_SESSION['email'] = $email;
                     $_SESSION['is_admin'] = ($email === 'matheusdossantoscarolino@gmail.com'); // Verificação do usuário autorizado
                     // Redirecionar para a página de administração
-                    header('Location: ../admin.php');
-                    exit;
+                    if ($_SESSION['is_admin']) {
+                      header('Location: ../admin.php');
+                  } else {
+                      header('Location: /pastelaria/usuario/user-logado.php');
+                  }
+                  exit; 
+                    
                 } else {
                     // Senha incorreta
                     header('Location: ../usuario/login.php?error=invalid_password');

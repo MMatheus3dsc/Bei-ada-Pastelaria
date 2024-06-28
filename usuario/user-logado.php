@@ -22,7 +22,7 @@
                     <li><a href="#cartoes">Cartões</a></li>
                     <li><a href="#autenticacao">Autenticação</a></li>
                     <li><a href="#devolucoes">Devoluções</a></li>
-                    <li><a href="logout.php">Sair</a></li>
+                    <li><a href="../sair.php">Sair</a></li>
                 </ul>
             </nav>
         </div>
