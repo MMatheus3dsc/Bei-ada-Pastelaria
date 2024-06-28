@@ -14,9 +14,12 @@ if (isset($_POST['cadastro-user'])) {
     $usuario = new Usuario(
         null,
         $_POST['name'],
+        $_POST['cpf'],
+        $_POST['data_nascimento'],
         $_POST['email'],
         $_POST['address'],
         $_POST['phone'],
+        $_POST['genero'],
         $_POST['password']
     );
 
@@ -53,20 +56,37 @@ if (isset($_POST['cadastro-user'])) {
     <h2>Cadastro</h2>
     <form id="cadastro" action="" method="POST">
       <div class="form-group">
-        <label for="username">Nome</label>
+        <label for="username">Nome:</label>
         <input type="text" id="name" name="name" placeholder="Nome completo" required>
+      </div>
+      <div class="form-group">
+        <label for="Cpf">CPF:</label>
+        <input type="text" id="cpf" name="cpf" placeholder="Cpf" required>
+      </div>
+      <div class="form-group">
+        <label for="date">Data de Nascimento:</label>
+        <input type="date" id="data_nascimento" name="data_nascimento" required>
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" placeholder="Email" required>
       </div>
       <div class="form-group">
-        <label for="endereco">Endereço</label>
+        <label for="endereco">Endereço:</label>
         <input type="text" id="address" name="address" placeholder="Endereço">
       </div>
       <div class="form-group">
-        <label for="telephone">Telefone</label>
+        <label for="telephone">Telefone:</label>
         <input type="tell" id="phone" name="phone" placeholder='Telefone' >
+      </div>
+      <div class="form-group">
+      <label>Gênero:</label>
+        <input type="radio" id="masculino" name="genero" value="masculino" required>
+        <label for="masculino">Masculino</label><br>
+        <input type="radio" id="feminino" name="genero" value="feminino" required>
+        <label for="feminino">Feminino</label><br>
+        <input type="radio" id="outro" name="genero" value="outro" required>
+        <label for="outro">Outro</label><br>
       </div>
       <div class="form-group">
         <label for="password">Senha:</label>

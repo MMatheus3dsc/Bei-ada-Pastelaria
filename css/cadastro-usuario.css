@@ -11,13 +11,13 @@ body {
 
   .signup-container {
     background-color: #fff;
-    padding: 40px;
+    padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .signup-container {
-    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+   margin: auto;
+   margin-bottom: 20px;
     text-align: center;
   }
   h2{
@@ -38,7 +38,7 @@ body {
   }
 
   .form-group input {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -62,4 +62,7 @@ body {
 
   .form-group button:hover {
     background-color: #0056b3;
+  }
+  .form-group genero{
+    padding: 15px;
   }

@@ -1,3 +1,31 @@
+<?php
+session_start();
+require "../src/conexao.php";
+
+// Verifica se o usuário está autenticado
+if (!isset($_SESSION['email'])) {
+    header('Location: usuario/login.php');
+    exit;
+}
+$email = $_SESSION['email'];
+
+$db = new Database();
+$pdo = $db->getConnection();
+
+// Buscar os dados do usuário no banco de dados
+$sql = "SELECT * FROM users WHERE email = :email";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':email', $email);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Verifica se o usuário foi encontrado
+if (!$user) {
+    echo "Usuário não encontrado.";
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,7 +40,7 @@
         <div class="sidebar">
             <div class="user-info">
                 <img src="user-avatar.png" alt="Avatar do usuário">
-                <p>Olá, <strong>Matheus!</strong></p>
+                <p>Olá, <strong><?php echo htmlspecialchars($user['name']); ?></strong></p>
             </div>
             <nav>
                 <ul>
@@ -20,8 +48,7 @@
                     <li><a href="#enderecos">Endereços</a></li>
                     <li><a href="#pedidos">Pedidos</a></li>
                     <li><a href="#cartoes">Cartões</a></li>
-                    <li><a href="#autenticacao">Autenticação</a></li>
-                    <li><a href="#devolucoes">Devoluções</a></li>
+                    <li><a href="../index.php">Cartapio</a></li>
                     <li><a href="../sair.php">Sair</a></li>
                 </ul>
             </nav>
@@ -31,17 +58,16 @@
                 <h1>Dados pessoais</h1>
                 <div class="user-data">
                     <div>
-                        <p><strong>Nome</strong><br>Matheus</p>
-                        <p><strong>Sobrenome</strong><br>Carolino</p>
+                        <p><strong>Nome</strong><br> <?php echo htmlspecialchars($user['name']); ?></p>
                     </div>
                     <div>
-                        <p><strong>Email</strong><br>matheusdossantoscarolino@gmail.com</p>
-                        <p><strong>Gênero</strong><br>Masculino</p>
+                        <p><strong>Email</strong><br> <?php echo htmlspecialchars($user['email']); ?> </p>
+                        <p><strong>Gênero</strong><br> <?php echo htmlspecialchars($user['genero']); ?> </p>
                     </div>
                     <div>
-                        <p><strong>CPF</strong><br>39001577822</p>
-                        <p><strong>Data de nascimento</strong><br>22/09/2002</p>
-                        <p><strong>Telefone</strong><br>(11) 97207-7617</p>
+                        <p><strong>CPF</strong><br> <?php echo htmlspecialchars($user['cpf']); ?> </p>
+                        <p><strong>Data de nascimento</strong><br> <?php echo htmlspecialchars($user['data_nascimento']); ?> </p>
+                        <p><strong>Telefone</strong><br> <?php echo htmlspecialchars($user['phone']); ?> </p>
                     </div>
                 </div>
             </section>
@@ -60,21 +86,6 @@
                 <p>Gerencie seus cartões de crédito/débito aqui.</p>
                 <!-- Adicione o conteúdo dos cartões aqui -->
             </section>
-            <section id="autenticacao">
-                <h1>Autenticação</h1>
-                <p>Altere suas configurações de autenticação aqui.</p>
-                <!-- Adicione o conteúdo da autenticação aqui -->
-            </section>
-            <section id="devolucoes">
-                <h1>Devoluções</h1>
-                <p>Gerencie suas devoluções de produtos aqui.</p>
-                <!-- Adicione o conteúdo das devoluções aqui -->
-            </section>
-            <section id="newsletter">
-                <h2>Newsletter</h2>
-                <label>
-                    <input type="checkbox"> Quero receber e-mails com promoções.
-                </label>
             </section>
         </div>
     </div>

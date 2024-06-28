@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                 if (password_verify($password, $user['password'])) {
                     // Usuário autenticado, criar uma sessão para ele
                     $_SESSION['email'] = $email;
-                    $_SESSION['is_admin'] = ($email === 'matheusdossantoscarolino@gmail.com'); // Verificação do usuário autorizado
+                    $_SESSION['is_admin'] = ($email === 'admin@gmail.com'); // Verificação do usuário autorizado
                     // Redirecionar para a página de administração
                     if ($_SESSION['is_admin']) {
                       header('Location: ../admin.php');

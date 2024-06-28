@@ -7,11 +7,11 @@ body{
     font-family: 'Barlow', sans-serif;
 }
 .fixed-menu {
-    position: fixed;
+    
     top: 0;
     width: 100%;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /*  */
+    background-color: 412f;
+    box-shadow: 0 2px 4px #f07818;  /*  */
     z-index: 1000;
 }
 .fixed-menu nav {
@@ -35,7 +35,7 @@ body{
     padding: 5px 10px;
 }
 .fixed-menu nav ul li a:hover {
-    color: #ff6a00;
+    color: #f07818 ;
 }
 
 main{
