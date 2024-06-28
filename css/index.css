@@ -6,6 +6,38 @@ body{
     background-color:#fcebb6;
     font-family: 'Barlow', sans-serif;
 }
+.fixed-menu {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /*  */
+    z-index: 1000;
+}
+.fixed-menu nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+.fixed-menu nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+.fixed-menu nav ul li {
+    margin: 0 15px;
+}
+.fixed-menu nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 5px 10px;
+}
+.fixed-menu nav ul li a:hover {
+    color: #ff6a00;
+}
+
 main{
     height: 100vh;
 }
@@ -43,20 +75,6 @@ h2{
     color:#f07818 ;
     font-weight: bold;
 }
-
-#log a{ 
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-    box-shadow: 1px 1px 20px rgb(212, 99, 24);
-    text-decoration: none;
-    padding: 20px;
-    margin-top: 40px;
-    color: #e21313;
-   
-}
-
-
 
 .container-salgado, .container-doce{
     display: flex;

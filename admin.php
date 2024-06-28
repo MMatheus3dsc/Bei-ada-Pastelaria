@@ -1,14 +1,12 @@
 <?php
 
 session_start(); 
-
-// Verifica se o usuário está autenticado
-if (!isset($_SESSION['email'])) {
-    // Se não estiver autenticado, redireciona de volta para a página de login
-    header('location: login.php');
-    exit;
+// Verifica se o usuário está autenticado e se é o usuário permitido
+if (!isset($_SESSION['email']) || !isset($_SESSION['is_admin']) || !$_SESSION['is_admin']) {
+  // Se não estiver autenticado ou não for o usuário permitido, redireciona para a página de login
+  header('Location: /pastelaria/usuario/login.php');
+  exit;
 }
-
    require "src/conexao.php";
    require "src/modelo/ClassProduto.php";
    require "src/repositorio/produto-repositorio.php";
@@ -81,6 +79,7 @@ if (!isset($_SESSION['email'])) {
   <form action="Gerador_de_pdf.php" method="post">
     <input type="submit" class="botao-cadastrar" value="Baixar Relatório"/>
   </form>
+  <a class="botao-sair" href="sair.php">Logout</a>
   </section>
 </main>
 </body>

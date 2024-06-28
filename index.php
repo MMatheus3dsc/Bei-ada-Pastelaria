@@ -33,8 +33,16 @@
     <title>Beiçada no Pastel</title>
 </head>
 <body>
+    <header class="fixed-menu">
+        <nav>
+            <ul>
+                <li><a href="./usuario/login.php"> Entrar</a></li>
+                <li><a href="#delivry">Delivry</a></li>
+                <li><a href="#app">App</a></li>
+            </ul>
+        </nav>
+    </header>
     <main>
-        <div class=""></div>
         <header>
             <section class="container-banner">
             <div class="container-texto-banner">
@@ -85,7 +93,7 @@
              </div>
             
         </section>
-        <div id="log"><a href="usuario/login.php" >Login</a></div>
+        
        
     </main>
 </body>
