@@ -39,6 +39,7 @@ if (!isset($_SESSION['email'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>Beiçada no Pastel</title>
+    <script type="module" src="../js/cart-Functions.js" defer></script>
 </head>
 <body>
     <header class="fixed-menu">
@@ -80,6 +81,13 @@ if (!isset($_SESSION['email'])) {
                     <p> <?=  $salgado->getNome()?> </p>
                     <p> <?=  $salgado->getDescricao()?> </p>
                     <p> <?=  $salgado->getPrecoFormatado()?> </p>
+
+                     <!-- Botões de + e - -->
+                    <div class="product-overlay">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
                 </div>
                 <?php endforeach ?>
             </div>
@@ -99,6 +107,12 @@ if (!isset($_SESSION['email'])) {
                     <p> <?=  $doce->getNome()?> </p>
                     <p> <?=  $doce->getDescricao()?> </p>
                     <p> <?=  $doce->getPrecoFormatado()?> </p>
+
+                    <div class="product-overlay">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
                 </div>
                 <?php endforeach ?>
 
@@ -108,5 +122,6 @@ if (!isset($_SESSION['email'])) {
         
        
     </main>
+    
 </body>
 </html>

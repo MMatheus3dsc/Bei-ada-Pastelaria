@@ -33,7 +33,6 @@ class UsuarioRepositorio {
         $statement->bindValue(8, $usuario->getGenero());
         $statement->execute();
     }
-    // Outros métodos do repositório, como buscar usuário por email, etc.
-    // ...
+    // 
 }
 ?>
