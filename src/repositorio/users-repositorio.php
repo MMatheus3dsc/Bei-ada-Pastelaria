@@ -21,11 +21,7 @@ class UsuarioRepositorio {
     }
 
     public function cadastrarUsuario(Usuario $usuario): void {
-<<<<<<< HEAD
         $sql = "INSERT INTO usuarios (name, email, address, phone, password ,cpf, data_nascimento, genero) VALUES (?, ?, ?, ?, ?,?,?,?)";
-=======
-        $sql = "INSERT INTO users (name, email, address, phone, password ,cpf, data_nascimento, genero) VALUES (?, ?, ?, ?, ?,?,?,?)";
->>>>>>> eeec17efb49405bb797e58508d73a43607a37faf
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(1, $usuario->getNome());
         $statement->bindValue(2, $usuario->getEmail());
