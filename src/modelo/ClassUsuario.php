@@ -98,6 +98,9 @@ class Usuario {
 }
 
 ?>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> eeec17efb49405bb797e58508d73a43607a37faf
