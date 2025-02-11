@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsuersTable extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
@@ -19,12 +19,10 @@ class CreateUsuersTable extends Migration
             $table->string('phone', 20);
             $table->enum('genero', ['masculino', 'feminino', 'outro']);
             $table->timestamps();
-        });
+        },'utf8mb4_unicode_ci');
     }
 
-    /**
-     * Reverse the migrations.
-     */
+  
     public function down(): void
     {
         Schema::dropIfExists('usuarios');

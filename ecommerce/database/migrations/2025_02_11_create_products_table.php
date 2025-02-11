@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
@@ -16,11 +16,11 @@ class CreateProductsTable extends Migration
             $table->decimal('preco', 10, 2); // Preço do produto
             $table->integer('stock'); // Quantidade em estoque
             $table->timestamps(); // 'created_at' e 'updated_at'
-        });
+        },'utf8mb4_unicode_ci');
     }
 
     public function down()
     {
         Schema::dropIfExists('produtos'); // Remove a tabela
     }
-}
+};

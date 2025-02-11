@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCartItemsTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
@@ -13,11 +13,11 @@ class CreateCartItemsTable extends Migration
             $table->foreignId('product_id')->constrained()->onDelete('cascade'); // ID do produto (chave estrangeira)
             $table->integer('quantity'); // Quantidade do produto
             $table->timestamps(); // Colunas 'created_at' e 'updated_at'
-        });
+        },'utf8mb4_unicode_ci');
     }
 
     public function down()
     {
         Schema::dropIfExists('cart_items'); // Remove a tabela em caso de rollback
     }
-}
+};

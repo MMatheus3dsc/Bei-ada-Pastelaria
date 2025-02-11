@@ -11,7 +11,7 @@ class CartItemController extends Controller
     // Lista todos os itens no carrinho
     public function index()
     {
-        return CartItem::with('product')->get(); // Inclui informações do produto
+        return CartItem::with('produto')->get(); // Inclui informações do produto
     }
 
     // Adiciona um item ao carrinho

@@ -4,9 +4,9 @@
 
 class Database {   private $host = 'localhost';
     private $port = '3306';
-    private $dbName = 'dates_beicada';
+    private $dbName = 'pastelaria'; 
     private $username = 'root';
-    private $password = 'muleta';
+    private $password = '';
     public $conn;
 
     public function getConnection(): PDO {
