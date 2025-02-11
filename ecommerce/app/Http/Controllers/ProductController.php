@@ -10,20 +10,20 @@ class ProductController extends Controller
     // Lista todos os produtos
     public function index()
     {
-        return Product::all(); // Retorna todos os produtos como JSON
+        return Product::all();
     }
 
     // Cria um novo produto
     public function store(Request $request)
     {
         $product = Product::create($request->all());
-        return response()->json($product, 201); // Retorna o produto criado
+        return response()->json($product, 201);
     }
 
     // Exibe um único produto
     public function show($id)
     {
-        return Product::findOrFail($id); // Retorna o produto pelo ID
+        return Product::findOrFail($id);
     }
 
     // Atualiza um produto

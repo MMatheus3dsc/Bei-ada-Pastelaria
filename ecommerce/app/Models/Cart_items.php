@@ -17,4 +17,3 @@ class CartItem extends Model
         return $this->belongsTo(Product::class);
     }
 }
-//Esse arquivo representa os itens no carrinho e permite interagir com o banco.

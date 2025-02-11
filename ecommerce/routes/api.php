@@ -7,11 +7,11 @@ use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\UserController;
 
 
-Route::get('/products', [ProductController::class, 'index']);
-Route::post('/products', [ProductController::class, 'store']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::put('/products/{id}', [ProductController::class, 'update']);
-Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+Route::get('/produtos', [ProductController::class, 'index']);
+Route::post('/produtos', [ProductController::class, 'store']);
+Route::get('/produtos/{id}', [ProductController::class, 'show']);
+Route::put('/produtos/{id}', [ProductController::class, 'update']);
+Route::delete('/produtos/{id}', [ProductController::class, 'destroy']);
 
 
 
@@ -22,10 +22,10 @@ Route::delete('/cart-items/{id}', [CartItemController::class, 'destroy']);
 
 
 
-Route::get('/users', [UserController::class, 'index']); // Listar usuários
-Route::get('/users/{id}', [UserController::class, 'show']); // Mostrar um usuário
-Route::post('/users', [UserController::class, 'store']); // Criar usuário
-Route::put('/users/{id}', [UserController::class, 'update']); // Atualizar usuário
-Route::delete('/users/{id}', [UserController::class, 'destroy']); // Deletar usuário
+Route::get('/usuarios', [UserController::class, 'index']); // Listar usuários
+Route::get('/usuarios/{id}', [UserController::class, 'show']); // Mostrar um usuário
+Route::post('/usuarios', [UserController::class, 'store']); // Criar usuário
+Route::put('/usuarios/{id}', [UserController::class, 'update']); // Atualizar usuário
+Route::delete('/usuarios/{id}', [UserController::class, 'destroy']); // Deletar usuário
 
 

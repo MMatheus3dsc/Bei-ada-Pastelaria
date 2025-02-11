@@ -10,5 +10,5 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'stock']; // Campos que podem ser preenchidos em massa
+    protected $fillable = ['nome', 'tipo', 'descricao', 'preco', 'stock']; // Campos que podem ser preenchidos em massa
 }
