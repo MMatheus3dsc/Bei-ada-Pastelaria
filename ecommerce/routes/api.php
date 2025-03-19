@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
 
 
 Route::get('/produtos', [ProductController::class, 'index']);
@@ -27,5 +28,12 @@ Route::get('/usuarios/{id}', [UserController::class, 'show']); // Mostrar um usu
 Route::post('/usuarios', [UserController::class, 'store']); // Criar usuário
 Route::put('/usuarios/{id}', [UserController::class, 'update']); // Atualizar usuário
 Route::delete('/usuarios/{id}', [UserController::class, 'destroy']); // Deletar usuário
+
+
+
+Route::post('/cart/add', [CartController::class, 'addToCart']);
+Route::get('/cart', [CartController::class, 'getCart']);
+Route::delete('/cart/{id}', [CartController::class, 'removeFromCart']);
+
 
 

@@ -1,6 +1,6 @@
 <?php // reference the Dompdf namespace
 use Dompdf\Dompdf;
-require "vendor/autoload.php";
+require "vendor\autoload.php";
 
 // instantiate and use the dompdf class
 $dompdf = new Dompdf();
