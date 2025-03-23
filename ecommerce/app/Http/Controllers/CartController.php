@@ -14,7 +14,7 @@ class CartController extends Controller
         $cart = Cart::updateOrCreate(
             [
                 'session_id' => session()->getId(),
-                'product_id' => $request->product_id
+                'produtos_id' => $request->produtos_id
             ],
             ['quantity' => DB::raw("quantity + {$request->quantity}")]
         );
@@ -24,7 +24,7 @@ class CartController extends Controller
 
     public function getCart()
     {
-        $cart = Cart::where('session_id', session()->getId())->with('product')->get();
+        $cart = Cart::where('session_id', session()->getId())->with('produto')->get();
         return response()->json($cart);
     }
 

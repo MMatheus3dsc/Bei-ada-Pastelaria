@@ -74,6 +74,7 @@ if (!isset($_SESSION['email'])) {
                     <p> <?=  $salgado->getNome()?> </p>
                     <p> <?=  $salgado->getDescricao()?> </p>
                     <p> <?=  $salgado->getPrecoFormatado()?> </p>
+                    <button onclick= addToCart() >carin</button>
                     
                 </div>
                 <?php endforeach ?>
@@ -104,5 +105,7 @@ if (!isset($_SESSION['email'])) {
        
     </main>
     
+
+    <script src="./cart/cartActions.js"></script>
 </body>
 </html>
