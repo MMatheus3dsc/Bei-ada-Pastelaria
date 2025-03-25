@@ -10,14 +10,36 @@ class ProductController extends Controller
     // Lista todos os produtos
     public function index()
     {
-        return Product::all();
+        return response()->json(Product::all());
     }
 
     // Cria um novo produto
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
-        return response()->json($product, 201);
+        $request->validate([
+            'tipo' => 'required|string',
+            'nome' => 'required|string',
+            'descricao' => 'required|string',
+            'preco' => 'required|numeric',
+            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Tratamento de upload de imagem
+        $imagemNome = 'banner-beicada.jpg'; // Padrão
+        if ($request->hasFile('imagem')) {
+            $imagemNome = uniqid() . '.' . $request->file('imagem')->extension();
+            $request->file('imagem')->storeAs('public/produtos', $imagemNome);
+        }
+
+        Product::create([
+            'tipo' => $request->tipo,
+            'nome' => $request->nome,
+            'descricao' => $request->descricao,
+            'preco' => $request->preco,
+            'imagem' => $imagemNome,
+        ]);
+
+        return redirect('/admin')->with('success', 'Produto cadastrado com sucesso!');
     }
 
     // Exibe um único produto

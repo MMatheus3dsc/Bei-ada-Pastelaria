@@ -6,8 +6,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\AuthController;
 
 
+Route::post('/admin/cadastrar-produto', [ProductController::class, 'store'])->name('cadastrar.produto');
 Route::get('/produtos', [ProductController::class, 'index']);
 Route::post('/produtos', [ProductController::class, 'store']);
 Route::get('/produtos/{id}', [ProductController::class, 'show']);
@@ -34,6 +36,10 @@ Route::delete('/usuarios/{id}', [UserController::class, 'destroy']); // Deletar 
 Route::post('/cart/add', [CartController::class, 'addToCart']);
 Route::get('/cart', [CartController::class, 'getCart']);
 Route::delete('/cart/{id}', [CartController::class, 'removeFromCart']);
+
+
+
+Route::post('/login', [AuthController::class, 'login']);
 
 
 
