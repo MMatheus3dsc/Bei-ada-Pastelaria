@@ -17,7 +17,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
     if (response.ok) {
         localStorage.setItem('token', data.token);
         alert('Login bem-sucedido!');
-        window.location.href = 'dashboard.php'; // Redireciona para a página correta
+        window.location.href = '../front-end/public/index.php'; // Redireciona para a página correta
     } else {
         document.getElementById('error-message').innerText = data.error;
     }

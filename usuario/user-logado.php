@@ -1,30 +1,5 @@
 <?php
-session_start();
 
-
-// Verifica se o usuário está autenticado
-if (!isset($_SESSION['email'])) {
-    header('Location: usuario/login.php');
-    exit;
-}
-$email = $_SESSION['email'];
-
-/* $db = new Database();
-$pdo = $db->getConnection();
-
-// Buscar os dados do usuário no banco de dados
-$sql = "SELECT * FROM usuarios WHERE email = :email";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':email', $email);
-$stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// Verifica se o usuário foi encontrado
-if (!$user) {
-    echo "Usuário não encontrado.";
-    exit;
-}
-*/
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -49,7 +24,7 @@ if (!$user) {
                     <li><a href="#pedidos">Pedidos</a></li>
                     <li><a href="#cartoes">Cartões</a></li>
                     <li><a href="../front-end/public/index.php">Cartapio</a></li>
-                    <li><a href="../sair.php">Sair</a></li>
+                    <li><a href="*">Sair</a></li>
                 </ul>
             </nav>
         </div>

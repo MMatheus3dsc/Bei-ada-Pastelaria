@@ -12,4 +12,9 @@ class Product extends Model
     protected $table = 'produtos'; // Nome correto da tabela no banco
 
     protected $fillable = ['nome', 'tipo', 'descricao', 'preco', 'stock']; // Campos que podem ser preenchidos em massa
+
+    public function getPrecoFormatadoAttribute()
+    {
+        return 'R$ ' . number_format($this->preco, 2, ',', '.');
+    }
 }

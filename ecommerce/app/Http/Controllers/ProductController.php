@@ -10,7 +10,14 @@ class ProductController extends Controller
     // Lista todos os produtos
     public function index()
     {
-        return response()->json(Product::all());
+        $produtos = Product::all(); 
+        return view('admin.produtos.index', compact('produtos'));
+    }
+
+    public function destroy($id)
+    {
+        Product::destroy($id);
+        return redirect()->route('admin.produtos')->with('success', 'Produto excluído com sucesso!');
     }
 
     // Cria um novo produto
@@ -57,9 +64,5 @@ class ProductController extends Controller
     }
 
     // Remove um produto
-    public function destroy($id)
-    {
-        Product::destroy($id);
-        return response()->json(['message' => 'Produto deletado']);
-    }
+  
 }

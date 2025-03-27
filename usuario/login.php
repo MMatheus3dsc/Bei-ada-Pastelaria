@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <script type="module" src ="../js/filtros.js"></script>
+  <script type="module" src ="../public/js/filtros.js"></script>
 </body>
 
 </html>
