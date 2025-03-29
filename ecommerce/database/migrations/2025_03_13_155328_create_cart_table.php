@@ -15,14 +15,14 @@ return new class extends Migration
     
             // Colunas da tabela
             $table->increments('id'); // ID como INT AUTO_INCREMENT
-            $table->unsignedInteger('usuarios_id'); // Chave estrangeira para usuários
+            $table->unsignedInteger('user_id'); // Chave estrangeira para usuários
             $table->unsignedInteger('produtos_id'); // Chave estrangeira para produtos
             $table->string('session_id')->nullable();
             $table->integer('quantity')->default(1);
             $table->timestamps();
     
             // Definição correta das chaves estrangeiras
-            $table->foreign('usuarios_id')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->foreign('produtos_id')->references('id')->on('produtos')->onDelete('cascade');
         });
     }

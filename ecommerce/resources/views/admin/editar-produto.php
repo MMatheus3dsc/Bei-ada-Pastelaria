@@ -1,24 +1,4 @@
 <?php
-   require "src/conexao.php";
-   require "src/modelo/ClassProduto.php";
-   require "src/repositorio/produto-repositorio.php";
-   $db = new Database();
-   $pdo = $db->getConnection();
-   $Repositorio = new produtoRepositorio($pdo);
-   if (isset($_POST['editar'])) {
-    $produto = new Produto($_POST['id'], $_POST['tipo'], $_POST['nome'], $_POST['descricao'], $_POST['preco']);
-
-    if (($_FILES["imagem"] ['error'] == UPLOAD_ERR_OK  )){ /* metodo error para verificar se não houve erro no upload */ 
-      $produto->setImagem(uniqid() . $_FILES['imagem']['name']);  //pega a imagem da instancia do produto e cria uma indetificação unica
-      move_uploaded_file($_FILES['imagem']['tmp_name'], $produto->getImagemRaiz()); // encaminha a imagem upada de sua matriz temporaria até o diretorio raiz do projeto
-     
-  }
-    $Repositorio->atualizar($produto);
-    header("Location: admin.php");
-} else {
-    $produto = $Repositorio->buscarPorId($_GET['id']);
-   }
-
 
 ?>
 

@@ -47,3 +47,21 @@ form input:focus{
     border: 3px solid #EBC181;
     outline: none;
 }
+
+.botao-cadastrar {
+    display: flex;
+    justify-content: center;
+    background-color: #89bb89;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.botao-cadastrar:hover {
+    background-color: #e2541b;
+}
+

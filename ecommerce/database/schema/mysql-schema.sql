@@ -74,6 +74,7 @@ CREATE TABLE `produtos` (
   `descricao` text,
   `preco` decimal(10,2) NOT NULL,
   `imagem` varchar(255) DEFAULT NULL,
+  `stock` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -96,11 +97,11 @@ CREATE TABLE `usuarios` (
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `id` int(10) unsigned AUTO_INCREMENT PRIMARY KEY,
-  `usuario_id` int unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
   `produtos_id` int unsigned NOT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   KEY `produtos_id` (`produtos_id`),
   CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`produtos_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -115,7 +116,7 @@ CREATE TABLE `cart_items` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   KEY `cart_id` (`cart_id`),
-  KEY `produtos_id` (`produtos_id`), -- Corrigido erro de digitação
+  KEY `produtos_id` (`produtos_id`), 
   CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE,
   CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`produtos_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -130,5 +131,5 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'2025_01_16_0234
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2025_01_16_023440_create_personal_access_tokens_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'2025_03_13_155328_create_cart_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2025_03_13_181643_create_cart_items',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2025_03_25_004501_create_sessions_table',1);2025_03_25_022758_create_migration
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (10,'2025_03_25_022758_create_migration',1)
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2025_03_25_004501_create_sessions_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (10,'2025_03_25_022758_create_migration',1);

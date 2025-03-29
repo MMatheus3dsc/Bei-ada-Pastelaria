@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+<link rel="stylesheet" href="/Bei-ada-Pastelaria-main/public/css/reset.css">
+<link rel="stylesheet" href="/Bei-ada-Pastelaria-main/public/css/admin.css">
+<link rel="stylesheet" href="/Bei-ada-Pastelaria-main/public/css/form.css">
 <main>
     <section class="container-admin-banner">
-        <a href="{{ route('admin.produtos') }}"><img src="{{ asset('img/banner-beiçada.jpg') }}" class="logo-admin" alt="logo-beicada"></a> 
+        <a href="/Bei-ada-Pastelaria-main/front-end/public/index.php"><img src="{{ asset('') }}" class="logo-admin" alt="logo-beicada"></a> 
         <h1>Administração Beiçada</h1>
-        <img class="ornaments" src="{{ asset('img/ornaments-coffee.png') }}" alt="ornaments">
+        <img class="ornaments" src="{{ asset('') }}" alt="ornaments">
     </section>
 
     <h2>Lista de Produtos</h2>
@@ -28,12 +31,12 @@
                         <td>{{ $produto->tipo }}</td>
                         <td>{{ $produto->descricao }}</td>
                         <td>{{ $produto->preco_formatado }}</td>
-                        <td><a class="botao-editar" href="{{ route('admin.produtos.edit', $produto->id) }}">Editar</a></td>
+                        <td><a class="botao-editar" href="edit.blade.php">Editar</a></td>
                         <td>
-                            <form action="{{ route('admin.produtos.destroy', $produto->id) }}" method="POST">
+                            <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="botao-excluir">Excluir</button>
+                                <button type="submit" class="botao-excluir" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</button>
                             </form>
                         </td>
                     </tr>
@@ -41,12 +44,15 @@
             </tbody>
         </table>
         
-        <a class="botao-cadastrar" href="{{ route('admin.produtos.create') }}">Cadastrar produto</a>
-        <form action="{{ route('admin.produtos.pdf') }}" method="POST">
-            @csrf
-            <button type="submit" class="botao-cadastrar">Baixar Relatório</button>
-        </form>
-        <a class="botao-sair" href="{{ route('logout') }}">Logout</a>
-    </section>
+        <a class="botao-cadastrar" href="create.blade.php">Cadastrar produto</a>
+        
+        @if(isset($produtos) && count($produtos) > 0)
+            <form action="{{ route('produtos.pdf') }}" method="POST">
+                @csrf
+                <button type="submit" class="botao-relatorio">Baixar Relatório</button>
+            </form>
+        @endif
+
+    </section> 
 </main>
 @endsection

@@ -7,62 +7,87 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // Lista todos os produtos
+    // Lista todos os produtos (GET /produtos)
     public function index()
     {
-        $produtos = Product::all(); 
-        return view('admin.produtos.index', compact('produtos'));
+        $produtos = Product::all();
+        return view('produtos.index', compact('produtos'));
     }
 
-    public function destroy($id)
+    // Mostra formulário de criação (GET /produtos/create)
+    public function create()
     {
-        Product::destroy($id);
-        return redirect()->route('admin.produtos')->with('success', 'Produto excluído com sucesso!');
+        return view('produtos.create');
     }
 
-    // Cria um novo produto
+    // Armazena novo produto (POST /produtos)
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'tipo' => 'required|string',
             'nome' => 'required|string',
             'descricao' => 'required|string',
             'preco' => 'required|numeric',
             'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'stock' => 'required|numeric'
         ]);
 
-        // Tratamento de upload de imagem
-        $imagemNome = 'banner-beicada.jpg'; // Padrão
+        $imagemNome = 'banner-beicada.jpg';
         if ($request->hasFile('imagem')) {
             $imagemNome = uniqid() . '.' . $request->file('imagem')->extension();
             $request->file('imagem')->storeAs('public/produtos', $imagemNome);
         }
 
-        Product::create([
-            'tipo' => $request->tipo,
-            'nome' => $request->nome,
-            'descricao' => $request->descricao,
-            'preco' => $request->preco,
-            'imagem' => $imagemNome,
-        ]);
+        Product::create(array_merge($validated, ['imagem' => $imagemNome]));
 
-        return redirect('/admin')->with('success', 'Produto cadastrado com sucesso!');
+        return redirect()->route('admin.produtos.index')->with('success', 'Produto cadastrado com sucesso!');
     }
 
-    // Exibe um único produto
+    // Mostra um produto específico (GET /produtos/{id})
     public function show($id)
     {
-        return Product::findOrFail($id);
+        $product = Product::findOrFail($id);
+        return view('admin.produtos.show', compact('product'));
     }
 
-    // Atualiza um produto
+    // Mostra formulário de edição (GET /produtos/{id}/edit)
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('admin.produtos.edit', compact('product'));
+    }
+
+    // Atualiza um produto (PUT/PATCH /produtos/{id})
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $product->update($request->all());
-        return response()->json($product);
+        
+        $validated = $request->validate([
+            'tipo' => 'required|string',
+            'nome' => 'required|string',
+            'descricao' => 'required|string',
+            'preco' => 'required|numeric',
+            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'stock' => 'required|numeric'
+        ]);
+
+        if ($request->hasFile('imagem')) {
+            $imagemNome = uniqid() . '.' . $request->file('imagem')->extension();
+            $request->file('imagem')->storeAs('public/produtos', $imagemNome);
+            $validated['imagem'] = $imagemNome;
+        }
+
+        $product->update($validated);
+
+        return redirect()->route('admin.produtos.index')->with('success', 'Produto atualizado com sucesso!');
     }
 
-    // Remove um produto
-  
+    // Remove um produto (DELETE /produtos/{id})
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+        
+        return redirect()->route('admin.produtos.index')->with('success', 'Produto excluído com sucesso!');
+    }
 }

@@ -5,34 +5,58 @@ namespace App\Http\Controllers;
 
 use App\Models\CartItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Http\Middleware;
 
 class CartItemController extends Controller
 {
-    // Lista todos os itens no carrinho
     public function index()
     {
-        return CartItem::with('produto')->get(); // Inclui informações do produto
+        // Adicionar filtro por usuário autenticado
+        $itens = CartItem::with('produto')
+                  ->where('user_id', Auth::id())
+                  ->get();
+                  
+        return response()->json($itens);
     }
 
-    // Adiciona um item ao carrinho
     public function store(Request $request)
     {
-        $cartItem = CartItem::create($request->all());
-        return response()->json($cartItem, 201);
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+            // outros campos necessários
+        ]);
+        
+        // Adiciona o user_id automaticamente
+        
+        
+        $cartItem = CartItem::create([
+            ...$validated,'user_id' => Auth::id()
+        ]);
+        return response()->json($cartItem->load('produto'), 201);
     }
 
-    // Atualiza a quantidade de um item no carrinho
     public function update(Request $request, $id)
     {
-        $cartItem = CartItem::findOrFail($id);
-        $cartItem->update($request->all());
-        return response()->json($cartItem);
+        $cartItem = CartItem::where('user_id', Auth::id())
+                      ->findOrFail($id);
+                      
+        $validated = $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
+        
+        $cartItem->update($validated);
+        return response()->json($cartItem->fresh('produto'));
     }
 
-    // Remove um item do carrinho
     public function destroy($id)
     {
-        CartItem::destroy($id);
-        return response()->json(['message' => 'Item removido do carrinho']);
+        $cartItem = CartItem::where('user_id', Auth::id())
+                      ->findOrFail($id);
+                      
+        $cartItem->delete();
+        return response()->json(['message' => 'Item removido do carrinho'], 200);
     }
+
 }

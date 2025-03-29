@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('tipo'); // tipo do produto
             $table->text('descricao'); // Descrição do produto
             $table->decimal('preco', 10, 2); // Preço do produto
+            $table->string('imagem');
             $table->integer('stock'); // Quantidade em estoque
             $table->timestamps(); // 'created_at' e 'updated_at'
         },'utf8mb4_unicode_ci');
