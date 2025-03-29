@@ -1,14 +1,46 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    /**
+     * Mostra o formulário de login
+     */
+    public function showLoginForm()
+    {
+        return view('auth.login'); // Assume que você tem uma view em resources/views/auth/login.blade.php
+    }
+
+    /**
+     * Processa o login (para formulários web)
+     */
     public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard'); // Redireciona para a rota após login
+        }
+
+        return back()->withErrors([
+            'email' => 'Credenciais inválidas.',
+        ])->onlyInput('email');
+    }
+
+    /**
+     * Processa o login via API
+     */
+    public function apiLogin(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -29,6 +61,58 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
-}
 
+    /**
+     * Mostra o formulário de registro
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.register'); // Assume que você tem uma view em resources/views/auth/register.blade.php
+    }
+
+    /**
+     * Processa o registro de novos usuários
+     */
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+        ]);
+
+        Auth::login($user);
+
+        return redirect('/dashboard'); // Ou retorne um JSON para APIs
+    }
+
+    /**
+     * Realiza logout
+     */
+    public function logout(Request $request)
+    {
+        // Para logout web
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+
+    /**
+     * Realiza logout da API
+     */
+    public function apiLogout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logout realizado com sucesso']);
+    }
+}
 ?>

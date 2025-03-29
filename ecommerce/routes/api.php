@@ -12,7 +12,8 @@ use App\Http\Controllers\AuthController;
 
 
 // Rotas públicas
-Route::get('/produtos/{id}', [ProductController::class, 'show']);
+Route::get('produtos/create', [ProductController::class, 'create'])->name('produtos.create');
+Route::post('produtos', [ProductController::class, 'store'])->name('produtos.store');
 
 // Rotas de autenticação
 Route::post('/login', [AuthController::class, 'login'])->name('login');

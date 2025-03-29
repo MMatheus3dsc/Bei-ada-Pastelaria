@@ -51,36 +51,25 @@ CREATE TABLE `personal_access_tokens` (
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 DROP TABLE IF EXISTS `sessions`;
 
 CREATE TABLE `sessions` (
   `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int unsigned NOT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci  NULL,
+  `user_id` int unsigned DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_agent` text COLLATE utf8mb4_unicode_ci,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sessions_user_id_index` (`user_id`),
-  KEY `sessions_last_activity_index` (`last_activity`),
-  CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `produtos`;
-CREATE TABLE `produtos` (
-  `id` int(10) unsigned AUTO_INCREMENT,
-  `tipo` varchar(10) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `descricao` text,
-  `preco` decimal(10,2) NOT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
-  `stock` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id`)
+  KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
-  `id` int(10) unsigned AUTO_INCREMENT,
+  `id` int unsigned DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   `cpf` varchar(14) NOT NULL,
   `data_nascimento` date NOT NULL,
@@ -94,27 +83,43 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `produtos`;
+CREATE TABLE `produtos` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(10) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `descricao` text,
+  `preco` decimal(10,2) NOT NULL,
+  `imagem` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
-  `id` int(10) unsigned AUTO_INCREMENT PRIMARY KEY,
-  `user_id` int unsigned NOT NULL,
-  `produtos_id` int unsigned NOT NULL,
+  `id` int unsigned DEFAULT NULL,
+  `usuario_id` int unsigned DEFAULT NULL,
+  `produtos_id` int unsigned DEFAULT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  KEY `produtos_id` (`produtos_id`),
-  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`produtos_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE
+  CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  KEY `produtos_id` (`usuario_id`),
+  CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`produtos_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 DROP TABLE IF EXISTS `cart_items`;
 CREATE TABLE `cart_items` (
-  `id` int(10) unsigned AUTO_INCREMENT PRIMARY KEY,
-  `cart_id` int unsigned NOT NULL,
-  `produtos_id` int unsigned NOT NULL,
+  `id` int unsigned DEFAULT NULL,
+  `cart_id` int unsigned DEFAULT NULL,
+  `produtos_id` int unsigned DEFAULT NULL,
   `quantidade` int NOT NULL DEFAULT 1,
   `preco_unitario` decimal(10,2) NOT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `cart_id` (`cart_id`),
   KEY `produtos_id` (`produtos_id`), 
   CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE,

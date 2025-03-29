@@ -15,6 +15,8 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->timestamps();
 
+
+            
             // Definição de chaves estrangeiras
             $table->foreign('cart_id')->references('id')->on('cart')->onDelete('cascade');
             $table->foreign('produtos_id')->references('id')->on('produtos')->onDelete('cascade');

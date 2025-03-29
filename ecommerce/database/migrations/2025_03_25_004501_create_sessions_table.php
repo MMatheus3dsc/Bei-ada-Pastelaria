@@ -16,12 +16,21 @@ return new class extends Migration {
             $table->engine = 'InnoDB';
 
             $table->string('id')->primary();
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('usuarios')->onDelete('cascade');
+            // Alterado para unsignedBigInteger para corresponder ao id da tabela usuarios
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
-            $table->integer('last_activity');
+            $table->integer('last_activity')->index();
+            
+            // Adicionado índice para user_id antes da foreign key
+            $table->index('user_id');
+            
+            // Foreign key corrigida
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('usuarios')
+                  ->onDelete('cascade');
         });
     }
 

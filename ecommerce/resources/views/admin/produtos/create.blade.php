@@ -18,8 +18,8 @@
 
     @csrf
     <div class="form-group">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" placeholder="Nome do produto" required alue="{{ old('name') }}">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" placeholder="Nome do produto" required alue="{{ old('nome') }}">
                 
     </div>
 
