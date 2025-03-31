@@ -29,7 +29,7 @@ return new class extends Migration {
             // Foreign key corrigida
             $table->foreign('user_id')
                   ->references('id')
-                  ->on('usuarios')
+                  ->on('user')
                   ->onDelete('cascade');
         });
     }

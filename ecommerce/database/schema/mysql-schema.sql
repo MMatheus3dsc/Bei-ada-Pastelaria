@@ -67,8 +67,8 @@ CREATE TABLE `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE `usuarios` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
   `id` int unsigned DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   `cpf` varchar(14) NOT NULL,
@@ -99,13 +99,13 @@ CREATE TABLE `produtos` (
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `id` int unsigned DEFAULT NULL,
-  `usuario_id` int unsigned DEFAULT NULL,
+  `user_id` int unsigned DEFAULT NULL,
   `produtos_id` int unsigned DEFAULT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  KEY `produtos_id` (`usuario_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  KEY `produtos_id` (`produtos_id`),
   CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`produtos_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

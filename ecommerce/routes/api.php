@@ -12,7 +12,7 @@ use App\Http\Controllers\AuthController;
 
 
 // Rotas públicas
-Route::get('produtos/create', [ProductController::class, 'create'])->name('produtos.create');
+Route::post('produtos/create', [ProductController::class, 'create'])->name('produtos.create');
 Route::post('produtos', [ProductController::class, 'store'])->name('produtos.store');
 
 // Rotas de autenticação
@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('produtos/pdf', [ProductController::class, 'generatePdf'])->name('produtos.pdf');
         
         // Rotas de Usuários
-        Route::resource('usuarios', UserController::class);
+        Route::resource('user', UserController::class);
 
         // Rotas do Carrinho
  
