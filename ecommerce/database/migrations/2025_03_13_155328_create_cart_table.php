@@ -16,7 +16,7 @@ return new class extends Migration
             // Colunas da tabela
             $table->increments('id'); // ID como INT AUTO_INCREMENT
             $table->unsignedInteger('user_id'); // Chave estrangeira para usuários
-            $table->unsignedInteger('produtos_id'); // Chave estrangeira para produtos
+            $table->unsignedInteger('products_id'); // Chave estrangeira para produtos
             $table->string('session_id')->nullable();
             $table->integer('quantity')->default(1);
             $table->timestamps();
@@ -25,7 +25,7 @@ return new class extends Migration
             
             // Definição correta das chaves estrangeiras
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->foreign('produtos_id')->references('id')->on('produtos')->onDelete('cascade');
+            $table->foreign('products_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
     

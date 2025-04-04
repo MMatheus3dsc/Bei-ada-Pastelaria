@@ -70,61 +70,57 @@ CREATE TABLE `sessions` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int unsigned DEFAULT NULL,
-  `name` varchar(100) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
   `cpf` varchar(14) NOT NULL,
-  `data_nascimento` date NOT NULL,
+  `birth_date` date NOT NULL,
   `email` varchar(100) NOT NULL,
   `address` text NOT NULL,
   `phone` varchar(15) DEFAULT NULL,
-  `genero` enum('Masculino','Feminino','Outro') DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `produtos`;
-CREATE TABLE `produtos` (
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE `products` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(10) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` text,
   `price` decimal(10,2) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `stock`decimal(100)
+  `stock` decimal(100),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
-  `id` int unsigned DEFAULT NULL,
-  `user_id` int unsigned DEFAULT NULL,
-  `produtos_id` int unsigned DEFAULT NULL,
+  `id` int unsigned DEFAULT NULL ,
+  `user_id` int unsigned DEFAULT NULL ON DELETE CASCADE,
+  `product_id` int unsigned DEFAULT NULL ON DELETE CASCADE,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
-  KEY `produtos_id` (`produtos_id`),
-  CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`produtos_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 DROP TABLE IF EXISTS `cart_items`;
 CREATE TABLE `cart_items` (
   `id` int unsigned DEFAULT NULL,
-  `cart_id` int unsigned DEFAULT NULL,
-  `produtos_id` int unsigned DEFAULT NULL,
-  `quantidade` int NOT NULL DEFAULT 1,
-  `preco_unitario` decimal(10,2) NOT NULL,
+  `cart_id` int unsigned DEFAULT NULL ON DELETE CASCADE,
+  `product_id` int unsigned DEFAULT NULL ON DELETE CASCADE,
+  `quantity` int NOT NULL DEFAULT 1,
+  `unit_price` decimal(10,2) NOT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `cart_id` (`cart_id`),
-  KEY `produtos_id` (`produtos_id`), 
+  KEY `product_id` (`product_id`),
   CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`produtos_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE
+  CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
