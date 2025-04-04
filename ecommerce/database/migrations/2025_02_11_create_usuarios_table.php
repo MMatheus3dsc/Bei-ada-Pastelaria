@@ -14,10 +14,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('cpf', 11)->unique();
-            $table->date('data_nascimento');
+            $table->date('birthday');
             $table->string('address');
             $table->string('phone', 20);
-            $table->enum('genero', ['masculino', 'feminino', 'outro']);
             $table->timestamps();
         },'utf8mb4_unicode_ci');
     }
@@ -25,6 +24,6 @@ return new class extends Migration
   
     public function down(): void
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('user');
     }
 };

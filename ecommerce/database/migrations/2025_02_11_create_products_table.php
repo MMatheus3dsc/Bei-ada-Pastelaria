@@ -8,14 +8,14 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('produtos', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id(); // Cria uma coluna ID (chave primária)
-            $table->string('nome'); // Nome do produto
-            $table->string('tipo'); // tipo do produto
-            $table->text('descricao'); // Descrição do produto
-            $table->decimal('preco', 10, 2); // Preço do produto
-            $table->string('imagem');
-            $table->integer('stock'); // Quantidade em estoque
+            $table->string('name'); // Nome do produto
+            $table->string('type'); // tipo do produto
+            $table->text('description'); // Descrição do produto
+            $table->decimal('price', 10, 2); // Preço do produto
+            $table->string('image');
+            $table->decimal('stock'); // Quantidade em estoque
             $table->timestamps(); // 'created_at' e 'updated_at'
         },'utf8mb4_unicode_ci');
     }

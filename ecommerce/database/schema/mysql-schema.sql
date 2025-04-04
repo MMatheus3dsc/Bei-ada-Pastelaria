@@ -86,11 +86,12 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `produtos`;
 CREATE TABLE `produtos` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `tipo` varchar(10) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `descricao` text,
-  `preco` decimal(10,2) NOT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
+  `type` varchar(10) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text,
+  `price` decimal(10,2) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `stock`decimal(100)
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -127,14 +128,13 @@ CREATE TABLE `cart_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2025_02_11_create_usuarios_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (2,'2025_02_11_create_products_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (3,'0001_01_01_000001_create_cache_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (4,'0001_01_01_000002_create_jobs_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'2025_01_16_023402_add_two_factor_columns_to_users_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2025_01_16_023440_create_personal_access_tokens_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'2025_03_13_155328_create_cart_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2025_03_13_181643_create_cart_items',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2025_03_13_181643_create_cart_items',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (2,'2025_02_11_create_usuarios_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (3,'2025_02_11_create_products_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (4,'0001_01_01_000001_create_cache_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'0001_01_01_000002_create_jobs_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2025_01_16_023402_add_two_factor_columns_to_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'2025_01_16_023440_create_personal_access_tokens_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2025_03_13_155328_create_cart_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2025_03_25_004501_create_sessions_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (10,'2025_03_25_022758_create_migration',1);

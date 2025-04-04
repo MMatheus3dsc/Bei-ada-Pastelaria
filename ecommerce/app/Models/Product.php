@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $table = 'produtos'; // Nome correto da tabela no banco
+    protected $table = 'products'; // Nome correto da tabela no banco
 
-    protected $fillable = ['nome', 'tipo', 'descricao', 'preco', 'imagem','stock']; // Campos que podem ser preenchidos em massa
+    protected $fillable = ['name', 'type', 'description', 'price', 'image','stock']; // Campos que podem ser preenchidos em massa
 
-    public function getPrecoFormatadoAttribute()
+    public function getPriceformattedAttribute()
     {
         return 'R$ ' . number_format($this->preco, 2, ',', '.');
     }

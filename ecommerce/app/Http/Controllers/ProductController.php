@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -21,28 +22,40 @@ class ProductController extends Controller
     }
 
     // Armazena novo produto (POST /produtos)
+
+    
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        // Validação dos dados
+        $request->validate([
+            'nome' => 'required|string|max:255',
             'tipo' => 'required|string',
-            'nome' => 'required|string',
             'descricao' => 'required|string',
             'preco' => 'required|numeric',
-            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'stock' => 'required|numeric'
+            'imagem' => 'nullable|image|max:2048' // Imagem opcional
         ]);
-
-        $imagemNome = 'banner-beicada.jpg';
+    
+        // Upload da imagem
+        $imagemPath = null;
         if ($request->hasFile('imagem')) {
-            $imagemNome = uniqid() . '.' . $request->file('imagem')->extension();
-            $request->file('imagem')->storeAs('public/produtos', $imagemNome);
+            $imagemPath = $request->file('imagem')->store('produtos', 'public');
         }
-
-        Product::create(array_merge($validated, ['imagem' => $imagemNome]));
-
-        return redirect()->route('admin.produtos.index')->with('success', 'Produto cadastrado com sucesso!');
+    
+        // Criar produto
+        $produto = Product::create([
+            'nome' => $request->nome,
+            'tipo' => $request->tipo,
+            'descricao' => $request->descricao,
+            'preco' => $request->preco,
+            'imagem' => $imagemPath
+        ]);
+    
+        return response()->json([
+            'mensagem' => 'Produto cadastrado com sucesso!',
+            'produto' => $produto
+        ], 201);
     }
-
+    
     // Mostra um produto específico (GET /produtos/{id})
     public function show($id)
     {

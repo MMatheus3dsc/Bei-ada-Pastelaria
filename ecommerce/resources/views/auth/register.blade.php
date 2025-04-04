@@ -6,7 +6,7 @@
 
         <x-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('user.store') }}">
             @csrf
 
             <div>
@@ -52,7 +52,7 @@
                 </a>
 
                 <x-button class="ms-4">
-                    {{ __('Register') }}
+                    {{ __('user.store') }}
                 </x-button>
             </div>
         </form>
