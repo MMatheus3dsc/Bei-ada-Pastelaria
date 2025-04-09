@@ -1,25 +1,22 @@
 <?php
 
+
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
 class AuthController extends Controller
 {
-    /**
-     * Mostra o formulário de login
-     */
+   
     public function showLoginForm()
     {
         return view('auth.login'); // Assume que você tem uma view em resources/views/auth/login.blade.php
     }
 
-    /**
-     * Processa o login (para formulários web)
-     */
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -37,9 +34,7 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    /**
-     * Processa o login via API
-     */
+    
     public function apiLogin(Request $request)
     {
         $request->validate([
@@ -62,17 +57,13 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Mostra o formulário de registro
-     */
+   
     public function showRegistrationForm()
     {
         return view('auth.register'); // Assume que você tem uma view em resources/views/auth/register.blade.php
     }
 
-    /**
-     * Processa o registro de novos usuários
-     */
+  
     public function register(Request $request)
     {
         $validatedData = $request->validate([
@@ -92,9 +83,7 @@ class AuthController extends Controller
         return redirect('/dashboard'); // Ou retorne um JSON para APIs
     }
 
-    /**
-     * Realiza logout
-     */
+    
     public function logout(Request $request)
     {
         // Para logout web
@@ -105,9 +94,7 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Realiza logout da API
-     */
+
     public function apiLogout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

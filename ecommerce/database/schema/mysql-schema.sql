@@ -67,23 +67,6 @@ CREATE TABLE `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` int unsigned DEFAULT NULL,
-  `full_name` varchar(100) NOT NULL,
-  `cpf` varchar(14) NOT NULL,
-  `birth_date` date NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `address` text NOT NULL,
-  `phone` varchar(15) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `cpf` (`cpf`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -98,23 +81,42 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `birth_date` date NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `address` text NOT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cpf` (`cpf`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
-  `id` int unsigned DEFAULT NULL ,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int unsigned DEFAULT NULL ,
   `product_id` int unsigned DEFAULT NULL ,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   KEY `product_id` (`product_id`),
   CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 DROP TABLE IF EXISTS `cart_items`;
 CREATE TABLE `cart_items` (
-  `id` int unsigned DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `cart_id` int unsigned DEFAULT NULL,
   `product_id` int unsigned DEFAULT NULL ,
   `quantity` int NOT NULL DEFAULT 1,
@@ -127,6 +129,7 @@ CREATE TABLE `cart_items` (
   CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE,
   CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2025_03_13_181643_create_cart_items',1);

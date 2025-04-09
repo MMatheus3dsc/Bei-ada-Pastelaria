@@ -7,12 +7,17 @@ use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\ApiRegisterController;
+
+
+
 
 
 
 // Rotas de autenticação para API (stateless)
 Route::post('/login', [AuthController::class, 'apiLogin']);
 Route::post('/logout', [AuthController::class, 'apiLogout'])->middleware('auth:sanctum');
+Route::post('/register', [ApiRegisterController::class, 'register']);
 
 // 🛒 Rotas públicas da API (ex: listar produtos)
 Route::get('/products', [ProductController::class, 'index'])->name('api.products.index');
