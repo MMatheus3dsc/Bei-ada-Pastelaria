@@ -11,8 +11,8 @@ class ProductController extends Controller
     // Lista todos os produtos (GET /produtos)
     public function index()
     {
-        $produtos = Product::all();
-        return view('produtos.index', compact('produtos'));
+        $products = Product::all();
+        return view('products.index', compact('products'));
     }
 
     // Mostra formulário de criação (GET /produtos/create)

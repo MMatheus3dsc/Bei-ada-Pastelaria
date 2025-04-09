@@ -77,6 +77,8 @@ CREATE TABLE `user` (
   `address` text NOT NULL,
   `phone` varchar(15) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
   UNIQUE KEY `email` (`email`)
@@ -90,16 +92,19 @@ CREATE TABLE `products` (
   `description` text,
   `price` decimal(10,2) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `stock` decimal(100),
+  `stock` int unsigned NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `id` int unsigned DEFAULT NULL ,
-  `user_id` int unsigned DEFAULT NULL ON DELETE CASCADE,
-  `product_id` int unsigned DEFAULT NULL ON DELETE CASCADE,
+  `user_id` int unsigned DEFAULT NULL ,
+  `product_id` int unsigned DEFAULT NULL ,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
@@ -110,8 +115,8 @@ CREATE TABLE `cart` (
 DROP TABLE IF EXISTS `cart_items`;
 CREATE TABLE `cart_items` (
   `id` int unsigned DEFAULT NULL,
-  `cart_id` int unsigned DEFAULT NULL ON DELETE CASCADE,
-  `product_id` int unsigned DEFAULT NULL ON DELETE CASCADE,
+  `cart_id` int unsigned DEFAULT NULL,
+  `product_id` int unsigned DEFAULT NULL ,
   `quantity` int NOT NULL DEFAULT 1,
   `unit_price` decimal(10,2) NOT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

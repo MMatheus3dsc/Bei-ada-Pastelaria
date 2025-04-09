@@ -15,15 +15,15 @@ Route::post('/login', [AuthController::class, 'apiLogin']);
 Route::post('/logout', [AuthController::class, 'apiLogout'])->middleware('auth:sanctum');
 
 // 🛒 Rotas públicas da API (ex: listar produtos)
-Route::get('/produtos', [ProductController::class, 'index'])->name('api.produtos.index');
+Route::get('/products', [ProductController::class, 'index'])->name('api.products.index');
 
 // 🔐 Rotas protegidas (requer autenticação)
 Route::middleware(['auth:sanctum'])->group(function () {
 
     // 🔹 Admin - CRUD de produtos
     Route::prefix('admin')->group(function () {
-        Route::resource('/produtos', ProductController::class)->except(['show']);
-        Route::post('produtos/pdf', [ProductController::class, 'generatePdf'])->name('api.produtos.pdf');
+        Route::resource('/products', ProductController::class)->except(['show']);
+        Route::post('products/pdf', [ProductController::class, 'generatePdf'])->name('api.products.pdf');
 
         // 🔹 Gestão de usuários
         Route::resource('user', UserController::class);

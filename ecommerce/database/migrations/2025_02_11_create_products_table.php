@@ -15,7 +15,7 @@ return new class extends Migration
             $table->text('description'); // Descrição do produto
             $table->decimal('price', 10, 2); // Preço do produto
             $table->string('image');
-            $table->decimal('stock'); // Quantidade em estoque
+            $table->unsignedInteger('stock'); // Quantidade em estoque
             $table->timestamps(); // 'created_at' e 'updated_at'
         },'utf8mb4_unicode_ci');
     }

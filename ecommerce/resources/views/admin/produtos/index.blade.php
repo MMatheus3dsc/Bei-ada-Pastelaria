@@ -12,6 +12,7 @@
     </section>
 
     <h2>Lista de Produtos</h2>
+  
 
     <section class="container-table">
         <table>
@@ -25,12 +26,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($produtos as $produto)
+               
+                @foreach ($products as $produto)
+            
                     <tr>
-                        <td>{{ $produto->nome }}</td>
-                        <td>{{ $produto->tipo }}</td>
-                        <td>{{ $produto->descricao }}</td>
-                        <td>{{ $produto->preco_formatado }}</td>
+                    <td>{{ $produto->name }}</td>
+                    <td>{{ $produto->type }}</td>
+                    <td>{{ $produto->description }}</td>
+                    <td>R$ {{ number_format($produto->price, 2, ',', '.') }}</td>
+
                         <td><a class="botao-editar" href="edit.blade.php">Editar</a></td>
                         <td>
                             <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST">
@@ -55,4 +59,6 @@
 
     </section> 
 </main>
+
+
 @endsection

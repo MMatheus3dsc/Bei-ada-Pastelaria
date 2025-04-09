@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Facades\Route;
+@endphp
+
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
@@ -6,7 +10,7 @@
 
         <x-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('user.store') }}">
+        <form method="POST" action="{{ route('register') }}">
             @csrf
 
             <div>
@@ -52,7 +56,7 @@
                 </a>
 
                 <x-button class="ms-4">
-                    {{ __('user.store') }}
+                    {{ __('Register') }}
                 </x-button>
             </div>
         </form>
