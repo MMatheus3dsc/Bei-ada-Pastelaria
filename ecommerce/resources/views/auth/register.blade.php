@@ -17,7 +17,7 @@
 
             <div>
                 <x-label for="cpf" value="Cpf" />
-                <x-input id="cpf" class="block mt-1 w-full" type="text" name="cpf" :value="old('cpf')" required />
+                <x-input id="cpf" class="block mt-1 w-full" type="text" name="cpf" :value="old('cpf')"  />
             </div>
 
             <!-- Email -->

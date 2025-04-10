@@ -14,9 +14,9 @@ class ApiRegisterController extends Controller
         // Validação
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:user,email', // atenção: sua tabela é "user", no singular
+            'email' => 'required|email|unique:users,email', // atenção: sua tabela é "user", no singular
             'password' => 'required|string|min:6|confirmed',
-            'cpf' => 'required|string|size:11|unique:user,cpf',
+            'cpf' => 'required|string|size:11|unique:users,cpf',
             'birth_date' => 'required|date',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
@@ -31,12 +31,12 @@ class ApiRegisterController extends Controller
         // Criar usuário
         $users = User::create([
             'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
             'cpf' => $request->cpf,
             'birth_date' => $request->birth_date,
+            'email' => $request->email,
             'address' => $request->address,
             'phone' => $request->phone,
+            'password' => Hash::make($request->password),
         ]);
     
         // Gerar token Sanctum
