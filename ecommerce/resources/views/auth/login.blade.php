@@ -1,8 +1,6 @@
 @php
     use Illuminate\Support\Facades\Route;
 @endphp
-
-
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
@@ -11,11 +9,11 @@
 
         <x-validation-errors class="mb-4" />
 
-        @session('status')
+        @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
+                {{ session('status') }}
             </div>
-        @endsession
+        @endif
 
         <form method="POST" action="{{ route('login') }}">
             @csrf

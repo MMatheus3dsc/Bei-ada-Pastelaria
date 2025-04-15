@@ -13,6 +13,10 @@ class Product extends Model
 
     protected $fillable = ['name', 'type', 'description', 'price', 'image','stock']; // Campos que podem ser preenchidos em massa
 
+
+    protected $casts = [
+        'price' => 'decimal:2',
+    ];
     public function getPriceformattedAttribute()
     {
         return 'R$ ' . number_format($this->preco, 2, ',', '.');

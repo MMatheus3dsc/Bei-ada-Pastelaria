@@ -1,4 +1,11 @@
+@php
+    use Illuminate\Support\Facades\Route;
+@endphp
+
+
 <x-guest-layout>
+
+
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
@@ -8,7 +15,7 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-
+            
             <!-- Name -->
             <div>
                 <x-label for="name" value="Nome" />

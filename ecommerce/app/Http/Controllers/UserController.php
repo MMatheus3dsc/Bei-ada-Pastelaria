@@ -30,10 +30,9 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email', // E-mail único na tabela
             'password' => 'required|string|min:6', // Senha mínima de 6 caracteres
             'cpf' => 'required|size:11|unique:users,cpf', // CPF único e exatamente 11 caracteres
-            'data_nascimento' => 'required|date', // Data de nascimento no formato válido
+            'birth_date' => 'required|date', // Data de nascimento no formato válido
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:15', // Número de telefone
-            'genero' => ['required', Rule::in(['Masculino', 'Feminino', 'Outro'])], // Gênero permitido
         ]);
 
         $validatedData['password'] = Hash::make($validatedData['password']); // Hash da senha
@@ -52,10 +51,9 @@ class UserController extends Controller
             'email' => ['sometimes', 'email', Rule::unique('users', 'email')->ignore($user->id)], // Permite o mesmo email para o próprio usuário
             'password' => 'sometimes|string|min:6',
             'cpf' => ['sometimes', 'size:11', Rule::unique('users', 'cpf')->ignore($user->id)],
-            'data_nascimento' => 'sometimes|date',
+            'birth_date' => 'sometimes|date',
             'address' => 'sometimes|string|max:255',
             'phone' => 'sometimes|string|max:15',
-            'genero' => ['sometimes', Rule::in(['Masculino', 'Feminino', 'Outro'])],
         ]);
 
         if (isset($validatedData['password'])) {

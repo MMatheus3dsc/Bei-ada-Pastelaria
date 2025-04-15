@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 
 
 
+
 // 🌐 Rota inicial
 Route::get('/', function () {
     return view('welcome');
@@ -20,11 +21,10 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/admin/products', function () {
+        return view('admin.products.index'); 
+    })->name('admin.products.index'); 
 });
-
 // 🔹 Rotas de autenticação para a web (com views)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -33,4 +33,18 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+// routes/web.php
+Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+    Route::resource('products',  ProductController::class)
+         ->names([
+             'index' => 'admin.products.index',
+             'create' => 'admin.products.create',
+             'store' => 'admin.products.store',
+             'show' => 'admin.products.show',
+             'edit' => 'admin.products.edit',
+             'update' => 'admin.products.update',
+             'destroy' => 'admin.products.destroy'
+         ]);
+        
+         Route::resource('user', UserController::class);
+});

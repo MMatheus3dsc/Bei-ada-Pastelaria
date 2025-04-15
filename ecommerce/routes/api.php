@@ -7,7 +7,7 @@ use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Auth\ApiRegisterController;
+
 
 
 
@@ -17,13 +17,14 @@ use App\Http\Controllers\Auth\ApiRegisterController;
 // Rotas de autenticação para API (stateless)
 Route::post('/login', [AuthController::class, 'apiLogin']);
 Route::post('/logout', [AuthController::class, 'apiLogout'])->middleware('auth:sanctum');
-Route::post('/register', [ApiRegisterController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register']);
 
 // 🛒 Rotas públicas da API (ex: listar produtos)
-Route::get('/products', [ProductController::class, 'index'])->name('api.products.index');
+Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
 
 // 🔐 Rotas protegidas (requer autenticação)
 Route::middleware(['auth:sanctum'])->group(function () {
+
 
     // 🔹 Admin - CRUD de produtos
     Route::prefix('admin')->group(function () {
