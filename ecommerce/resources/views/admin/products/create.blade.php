@@ -1,13 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" href="/Bei-ada-Pastelaria-main/public/css/reset.css">
-<link rel="stylesheet" href="/Bei-ada-Pastelaria-main/public/css/admin.css">
-<link rel="stylesheet" href="/Bei-ada-Pastelaria-main/public/css/form.css">
+
+@push('styles')
+    <!-- Use a função asset() para gerar URLs corretas -->
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+@endpush
+
+
 <main>
 
 <section class="container-admin-banner">
-        <a href="{{ route('produtos.index') }}"><img src="{{ asset('img/banner-beiçada.jpg') }}" class="logo-admin" alt="logo-beicada"></a> 
+        <a href="{{ route('products.index') }}"><img src="{{ asset('img/banner-beiçada.jpg') }}" class="logo-admin" alt="logo-beicada"></a> 
         <h1>Cadastrar Produto</h1>
         <img class="ornaments" src="{{ asset('img/ornaments-coffee.png') }}" alt="ornaments">
 </section>
@@ -17,39 +23,51 @@
         @csrf
 
         <div class="form-group">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" placeholder="Nome do produto" required value="{{ old('nome') }}">
-        </div>
-
-        <div class="container-radio">
-            <label for="salgado">Salgado</label>
-            <input type="radio" id="salgado" name="tipo" value="Salgado" required>
-            
-            <label for="doce">Doce</label>
-            <input type="radio" id="doce" name="tipo" value="Doce" required>
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" placeholder="Nome do produto" required value="{{ old('name') }}">
         </div>
 
         <div class="form-group">
-            <label for="descricao">Descrição</label>
-            <textarea id="descricao" name="descricao" class="form-input" placeholder="Digite uma descrição" required>{{ old('descricao') }}</textarea>
+        <label>Tipo:</label>
+        <div class="container-radio">
+            <label class="radio-option">
+                <input type="radio" name="type" value="salgado" {{ old('type') == 'salgado' ? 'checked' : '' }} required>
+                Salgado
+            </label>
+            
+            <label class="radio-option">
+                <input type="radio" name="type" value="doce" {{ old('type') == 'doce' ? 'checked' : '' }}>
+                Doce
+            </label>
+        </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Descrição</label>
+            <textarea id="description" name="description" class="form-input" placeholder="Digite uma descrição" required>{{ old('description') }}</textarea>
         </div>
 
         <div class="form-group">
             <label for="preco">Preço</label>
-            <input type="text" id="preco" name="preco" placeholder="Digite o preço" required>
+            <input type="text" id="price" name="price" placeholder="Digite o preço" required>
         </div>  
 
         <div class="form-group">
-            <label for="imagem">Imagem do Produto</label>
-            <input type="file" name="imagem" accept="image/*" id="imagem">
+            <label for="stock">Estoque</label>
+            <input type="text" name="stock"  id="stock">
+        </div>
+
+        <div class="form-group">
+            <label for="image">Imagem do Produto</label>
+            <input type="file" name="image" accept="image/*" id="image">
         </div>
 
         <button type="submit" class="botao-cadastrar">Cadastrar Produto</button>
     </form>
 </section>
 
-<script src="/Bei-ada-Pastelaria-main/public/js/ajaxProdutos.js"></script>
-<script>
+
+<script src="/Bei-ada-Pastelaria-main/public/js/ajaxProdutos.js">
     document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('produto-form').addEventListener('submit', async function (event) {
             event.preventDefault();

@@ -12,8 +12,9 @@
 @section('content')
 <main>
     <section class="container-admin-banner">
+    <img src="{{ asset('img/banner-beiçada.jpg') }}" class="logo-admin" alt="logo-beicada">
         <h1>Administração</h1>
-        <img class="ornaments" src="{{ asset('img/ornaments.png') }}" alt="Ornamentos">
+        <img class="ornaments" src="{{ asset('img/ornaments-coffee.png') }}" alt="ornaments">
     </section>
 
     <h2>Lista de Produtos</h2>
@@ -34,7 +35,7 @@
                 @foreach ($products as $product)
                     <tr>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->type }}</td>
+                        <td>{{ $product->type_name }}</td>
                         <td>{{ Str::limit($product->description, 50) }}</td>
                         <td>{{ $product->formatted_price }}</td>
                         <td>{{ $product->stock }}</td>
