@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@use('Illuminate\Support\Str')
 @section('title', 'Administração de Produtos')
 
 @push('styles')

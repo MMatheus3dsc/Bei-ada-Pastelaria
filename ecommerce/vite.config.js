@@ -10,6 +10,7 @@ export default defineConfig({
             'resources/css/admin.css',
             'resources/css/form.css',
             'resources/js/app.js',
+            'resources/js/ajaxProdutos.js'
         ]),
     ],
 })

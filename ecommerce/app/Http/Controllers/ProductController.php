@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -31,14 +32,25 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0'
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
+        try {
+            if ($request->hasFile('image')) {
+                $validated['image'] = $request->file('image')->store('products', 'public');
+            }
+    
+            Product::create($validated);
+    
+            return redirect()->route('products.index')
+                            ->with('success', 'Produto cadastrado com sucesso!');
+                            
+        } catch (\Exception $e) {
+            // Remove a imagem se foi upload mas falhou o cadastro
+            if (isset($validated['image'])) {
+                Storage::disk('public')->delete($validated['image']);
+            }
+            
+            return back()->withInput()
+                        ->with('error', 'Erro ao cadastrar produto: '.$e->getMessage());
         }
-
-        Product::create($validated);
-
-        return redirect()->route('admin.products.index')
-                         ->with('success', 'Produto cadastrado com sucesso!');
     }
 
     public function show(Product $product)
@@ -55,23 +67,32 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-           'type' => 'required|in:'.Product::validTypes(),
+            'type' => 'required|in:'.Product::validTypes(),
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'image' => 'nullable|image|max:2048',
             'stock' => 'required|integer|min:0'
         ]);
-
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
+    
+        try {
+            if ($request->hasFile('image')) {
+                // Remove imagem antiga
+                if ($product->image) {
+                    Storage::disk('public')->delete($product->image);
+                }
+                $validated['image'] = $request->file('image')->store('products', 'public');
+            }
+    
+            $product->update($validated);
+    
+            return redirect()->route('products.index')
+                             ->with('success', 'Produto atualizado com sucesso!');
+                             
+        } catch (\Exception $e) {
+            return back()->withInput()
+                        ->with('error', 'Erro ao atualizar produto: '.$e->getMessage());
         }
-
-        $product->update($validated);
-
-        return redirect()->route('admin.products.index')
-                         ->with('success', 'Produto atualizado com sucesso!');
     }
-
     public function destroy(Product $product)
     {
         $product->delete();

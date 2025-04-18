@@ -39,8 +39,8 @@
             </div>
 
             <div>
-                <x-label for="adress" value="Endereço" />
-                <x-input id="adress" class="block mt-1 w-full" type="text" name="adress" :value="old('adress')" required />
+                <x-label for="address" value="Endereço" />
+                <x-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required />
             </div>
 
             <div>

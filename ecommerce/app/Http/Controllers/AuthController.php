@@ -49,13 +49,8 @@ class AuthController extends Controller
             return response()->json(['error' => 'Credenciais inválidas'], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Login realizado com sucesso',
-            'token' => $token,
-            'user' => $user
-        ]);
+        Auth::login($user); // Substitua $user pelo objeto do usuário criado
+        return redirect()->route('admin.products.index'); // Redireciona para a página inicial logada
     }
 
    
@@ -86,12 +81,12 @@ class AuthController extends Controller
         // Criar usuário
         $users = User::create([
             'name' => $request->name,
-            'cpf' => $request->cpf,
-            'birth_date' => $request->birth_date,
             'email' => $request->email,
+            'cpf' => $request->cpf,
+            'password' => Hash::make($request->password),
+            'birth_date' => $request->birth_date,
             'address' => $request->address,
             'phone' => $request->phone,
-            'password' => Hash::make($request->password),
         ]);
     
         // Gerar token Sanctum
@@ -102,13 +97,15 @@ class AuthController extends Controller
             'token' => $token,
             'users' => $users
         ]);
+
+        
     }
    
     
     public function logout(Request $request)
     {
         // Para logout web
-        Auth::logout('auth.login');
+        Auth::logout('login');
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

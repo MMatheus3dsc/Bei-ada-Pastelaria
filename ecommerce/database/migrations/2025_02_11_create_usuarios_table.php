@@ -13,10 +13,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('cpf', 11)->unique(); // Removido nullable
-            $table->date('birth_date'); // Removido nullable
-            $table->string('address'); // Removido nullable
-            $table->string('phone', 20); // Removido nullable
+            $table->string('cpf', 11)->unique(); 
+            $table->date('birth_date'); 
+            $table->string('address'); 
+            $table->string('phone', 20);
             $table->timestamps();
         }, 'utf8mb4_unicode_ci');
     }

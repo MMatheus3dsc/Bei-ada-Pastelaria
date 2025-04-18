@@ -13,13 +13,13 @@
 <main>
 
 <section class="container-admin-banner">
-        <a href="{{ route('products.index') }}"><img src="{{ asset('img/banner-beiçada.jpg') }}" class="logo-admin" alt="logo-beicada"></a> 
+        <a href="{{ route('admin.products.index') }}"><img src="{{ asset('img/banner-beiçada.jpg') }}" class="logo-admin" alt="logo-beicada"></a> 
         <h1>Cadastrar Produto</h1>
         <img class="ornaments" src="{{ asset('img/ornaments-coffee.png') }}" alt="ornaments">
 </section>
 
 <section class="container-form">
-    <form id="produto-form" enctype="multipart/form-data">
+<form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group">
@@ -67,14 +67,6 @@
 </section>
 
 
-<script src="/Bei-ada-Pastelaria-main/public/js/ajaxProdutos.js">
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById('produto-form').addEventListener('submit', async function (event) {
-            event.preventDefault();
-            await createProduct();
-        });
-    });
-</script>
 
 
 

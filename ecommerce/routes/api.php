@@ -21,6 +21,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 // 🛒 Rotas públicas da API (ex: listar produtos)
 Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
+Route::post('/products', [ProductController::class, 'store'])->name('admin.products.create');
 
 // 🔐 Rotas protegidas (requer autenticação)
 Route::middleware(['auth:sanctum'])->group(function () {
