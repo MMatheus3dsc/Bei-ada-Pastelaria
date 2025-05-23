@@ -5,6 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -18,22 +19,20 @@ class AuthController extends Controller
     }
 
 
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+   public function login(Request $request)
+{
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->route('admin.products.index'); // Redireciona para a rota após login
-        }
-
-        return back()->withErrors([
-            'email' => 'Credenciais inválidas.',
-        ])->onlyInput('email');
+    if (Auth::guard('web')->attempt($credentials)) { 
+        $request->session()->regenerate();
+        return redirect()->route('admin.products.index'); 
     }
+
+    return back()->withErrors(['email' => 'Credenciais inválidas.']);
+}
 
     
     public function apiLogin(Request $request)
@@ -49,10 +48,14 @@ class AuthController extends Controller
             return response()->json(['error' => 'Credenciais inválidas'], 401);
         }
 
-        Auth::login($user); // Substitua $user pelo objeto do usuário criado
-        return redirect()->route('admin.products.index'); // Redireciona para a página inicial logada
+        $token = $user->createToken('api-token')->plainTextToken;
+        
+        return response()->json([
+            'token' => $token,
+            'user' => $user,
+            'message' => 'Login realizado com sucesso'
+        ]);
     }
-
    
     public function showRegistrationForm()
     {
@@ -89,14 +92,9 @@ class AuthController extends Controller
             'phone' => $request->phone,
         ]);
     
-        // Gerar token Sanctum
-        $token = $users->createToken('api-token')->plainTextToken;
-    
-        return response()->json([
-            'message' => 'Usuário registrado com sucesso!',
-            'token' => $token,
-            'users' => $users
-        ]);
+       Auth::login($users);
+       return redirect($this->redirectTo);
+   
 
         
     }
@@ -105,11 +103,11 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         // Para logout web
-        Auth::logout('login');
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('');
+        return redirect('login');
     }
 
 

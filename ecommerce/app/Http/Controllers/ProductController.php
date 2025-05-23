@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $products = Product::all();
-        return view('admin.products.index', compact('products'));
-    }
-
+   public function index()
+{
+    //
+    $products = Product::all(); // 👈 Busca produtos do banco
+    return view('admin.products.index', compact('products'));
+}
     public function create()
     {
         return view('admin.products.create');
@@ -39,7 +39,7 @@ class ProductController extends Controller
     
             Product::create($validated);
     
-            return redirect()->route('products.index')
+            return redirect()->route('admin.products.index')
                             ->with('success', 'Produto cadastrado com sucesso!');
                             
         } catch (\Exception $e) {
@@ -55,7 +55,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return view('admin.products.show', compact('product'));
+        return view('admin.products.show',compact('product') );
     }
 
     public function edit(Product $product)
@@ -85,7 +85,7 @@ class ProductController extends Controller
     
             $product->update($validated);
     
-            return redirect()->route('products.index')
+            return redirect()->route('admin.products.index')
                              ->with('success', 'Produto atualizado com sucesso!');
                              
         } catch (\Exception $e) {
@@ -100,4 +100,6 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')
                          ->with('success', 'Produto excluído com sucesso!');
     }
+
+    
 }
