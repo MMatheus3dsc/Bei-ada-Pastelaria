@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Http\Controllers;
 
 use App\Models\Product;
@@ -10,40 +8,28 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-   public function index()
-{
-    //
-    $products = Product::all(); // 👈 Busca produtos do banco
-    return view('admin.products.index', compact('products'));
-}
+    public function index()
+    {
+        $products = Product::all();
+        return view('admin.products.index', compact('products'));
+    }
+
     public function create()
     {
-        return view('admin.products.create');
+        return view('admin.products.create', compact('products'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|in:'.Product::validTypes(),
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'image' => 'nullable|image|max:2048',
-            'stock' => 'required|integer|min:0'
-        ]);
-
+        $validated = $this->validateProduct($request);
+        
         try {
-            if ($request->hasFile('image')) {
-                $validated['image'] = $request->file('image')->store('products', 'public');
-            }
-    
+            $validated['image'] = $this->handleImageUpload($request);
             Product::create($validated);
-    
-            return redirect()->route('admin.products.index')
+            
+            return redirect()->route('admin.product.index')
                             ->with('success', 'Produto cadastrado com sucesso!');
-                            
         } catch (\Exception $e) {
-            // Remove a imagem se foi upload mas falhou o cadastro
             if (isset($validated['image'])) {
                 Storage::disk('public')->delete($validated['image']);
             }
@@ -55,17 +41,48 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return view('admin.products.show',compact('product') );
+        return view('admin.products.show', compact('products'));
     }
 
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('product'));
+        return view('admin.products.edit', compact('products'));
     }
 
     public function update(Request $request, Product $product)
     {
-        $validated = $request->validate([
+        $validated = $this->validateProduct($request);
+        
+        try {
+            $validated['image'] = $this->handleImageUpload($request, $product);
+            $product->update($validated);
+            
+            return redirect()->route('admin.products.index')
+                            ->with('success', 'Produto atualizado com sucesso!');
+        } catch (\Exception $e) {
+            return back()->withInput()
+                        ->with('error', 'Erro ao atualizar produto: '.$e->getMessage());
+        }
+    }
+
+    public function destroy(Product $product)
+    {
+        try {
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $product->delete();
+            
+            return redirect()->route('admin.products.index')
+                            ->with('success', 'Produto excluído com sucesso!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro ao excluir produto: '.$e->getMessage());
+        }
+    }
+
+    private function validateProduct(Request $request)
+    {
+        return $request->validate([
             'name' => 'required|string|max:255',
             'type' => 'required|in:'.Product::validTypes(),
             'description' => 'required|string',
@@ -73,33 +90,16 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
             'stock' => 'required|integer|min:0'
         ]);
-    
-        try {
-            if ($request->hasFile('image')) {
-                // Remove imagem antiga
-                if ($product->image) {
-                    Storage::disk('public')->delete($product->image);
-                }
-                $validated['image'] = $request->file('image')->store('products', 'public');
-            }
-    
-            $product->update($validated);
-    
-            return redirect()->route('admin.products.index')
-                             ->with('success', 'Produto atualizado com sucesso!');
-                             
-        } catch (\Exception $e) {
-            return back()->withInput()
-                        ->with('error', 'Erro ao atualizar produto: '.$e->getMessage());
-        }
-    }
-    public function destroy(Product $product)
-    {
-        $product->delete();
-        
-        return redirect()->route('admin.products.index')
-                         ->with('success', 'Produto excluído com sucesso!');
     }
 
-    
+    private function handleImageUpload(Request $request, Product $product = null)
+    {
+        if ($request->hasFile('image')) {
+            if ($product && $product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            return $request->file('image')->store('products', 'public');
+        }
+        return $product->image ?? null;
+    }
 }

@@ -10,7 +10,7 @@ use App\Http\Controllers\AuthController;
 
 
 // 🌐 Rota inicial
-Route::get('/', function () {
+/*Route::get('/', function () {
     return file_get_contents(__DIR__.'/../../frontend/public/index.html');
 });
 Route::get('/{filename}', function ($filename) {
@@ -19,7 +19,7 @@ Route::get('/{filename}', function ($filename) {
         return response()->file($path);
     }
     abort(404);
-})->where('filename', '.*');
+})->where('filename', '.*');*/
 
 
 // 🔹 Rotas de autenticação para a web (com views)
@@ -39,3 +39,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('users', UserController::class);
     });
 });
+
