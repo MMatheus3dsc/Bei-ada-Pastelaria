@@ -9,7 +9,7 @@
 @section('content')
 <main>
     <section class="container-admin-banner">
-        <a href="{{ route('admin.product.index') }}"><img src="{{ asset('img/banner-beiçada.jpg') }}" class="logo-admin" alt="logo-beicada"></a>
+        <a href="{{ route('admin.products.index') }}"><img src="{{ asset('img/banner-beiçada.jpg') }}" class="logo-admin" alt="logo-beicada"></a>
         <h1>Editar Produto</h1>
         <img class="ornaments" src="{{ asset('img/ornaments-coffee.png') }}" alt="ornaments">
     </section>
@@ -80,7 +80,7 @@
                 <label for="image">Imagem do Produto</label>
                 @if($product->image)
                     <div class="current-image">
-                        <img src="{{ asset('storage/produtos/'.$product->image) }}" alt="Imagem atual" style="max-width: 200px; display: block; margin: 10px 0;">
+                        <img src="{{ asset('storage/products/'.$product->image) }}" alt="Imagem atual" style="max-width: 200px; display: block; margin: 10px 0;">
                         <span>Imagem atual</span>
                     </div>
                 @endif

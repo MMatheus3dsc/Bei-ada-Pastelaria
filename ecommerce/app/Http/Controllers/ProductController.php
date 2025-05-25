@@ -16,6 +16,7 @@ class ProductController extends Controller
 
     public function create()
     {
+         $products = Product::all();
         return view('admin.products.create', compact('products'));
     }
 
@@ -27,7 +28,7 @@ class ProductController extends Controller
             $validated['image'] = $this->handleImageUpload($request);
             Product::create($validated);
             
-            return redirect()->route('admin.product.index')
+            return redirect()->route('admin.products.index')
                             ->with('success', 'Produto cadastrado com sucesso!');
         } catch (\Exception $e) {
             if (isset($validated['image'])) {
@@ -41,16 +42,19 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+         $products = Product::all();
         return view('admin.products.show', compact('products'));
     }
 
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('products'));
+        // $products = Product::all();
+        return view('admin.products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
     {
+         
         $validated = $this->validateProduct($request);
         
         try {
