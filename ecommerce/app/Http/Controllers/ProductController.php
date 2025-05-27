@@ -8,6 +8,19 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+
+    public function home()
+{
+    $salgados = Product::where('type', 'salgado')
+                      ->orderBy('name')
+                      ->get();
+                      
+    $doces = Product::where('type', 'doce')
+                   ->orderBy('name')
+                   ->get();
+                   
+    return view('pages.home', compact('salgados', 'doces'));
+}
     public function index()
     {
         $products = Product::all();

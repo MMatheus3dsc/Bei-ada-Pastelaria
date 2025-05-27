@@ -9,17 +9,7 @@ use App\Http\Controllers\AuthController;
 
 
 
-// 🌐 Rota inicial
-/*Route::get('/', function () {
-    return file_get_contents(__DIR__.'/../../frontend/public/index.html');
-});
-Route::get('/{filename}', function ($filename) {
-    $path = __DIR__.'/../../public/'.$filename;
-    if (file_exists($path)) {
-        return response()->file($path);
-    }
-    abort(404);
-})->where('filename', '.*');*/
+Route::get('/', [ProductController::class, 'home'])->name('home');
 
 
 // 🔹 Rotas de autenticação para a web (com views)
@@ -29,6 +19,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('cart.add' [CartController::class, 'add']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
