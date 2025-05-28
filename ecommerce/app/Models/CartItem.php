@@ -10,7 +10,7 @@ class CartItem extends Model
     use HasFactory;
 
      protected $table = 'cart_items';
-    protected $fillable = ['produtos_id', 'quantity']; // Campos permitidos para preenchimento em massa
+    protected $fillable = ['product_id', 'quantity']; // Campos permitidos para preenchimento em massa
 
     // Relacionamento com o modelo Product
     public function product()

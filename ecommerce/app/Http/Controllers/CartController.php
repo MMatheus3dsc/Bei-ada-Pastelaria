@@ -14,7 +14,7 @@ class CartController extends Controller
         $cart = Cart::updateOrCreate(
             [
                 'session_id' => session()->getId(),
-                'produtos_id' => $request->produtos_id
+                'products_id' => $request->products_id
             ],
             ['quantity' => DB::raw("quantity + {$request->quantity}")]
         );
